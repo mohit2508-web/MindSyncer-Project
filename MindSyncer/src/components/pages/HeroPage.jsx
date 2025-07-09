@@ -24,7 +24,7 @@ const HeroPage = () => {
         <div className="max-w-6xl mx-auto">
             {/* Animated Heading */}
             <h1 className="text-4xl md:text-4xl font-semibold text-gray-900 mb-6 leading-tight">
-            Find your perfect teammate{" "}
+            Find your perfect {" "}
             <span
                 ref={typedRef}
                 className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-blue-600"
