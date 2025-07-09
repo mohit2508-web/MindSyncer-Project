@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 export default function Header() {
   return (
-    <header className="bg-white shadow-sm rounded-b-3xl">
+    <header className="bg-white flexshadow-sm rounded-b-3xl">
       <div className="max-w-10xl mx-auto px-4 sm:px-6 lg:px-4 py-4 flex items-center justify-between">
         {/* Logo and Navigation */}
         <div className="flex items-center space-x-10">
