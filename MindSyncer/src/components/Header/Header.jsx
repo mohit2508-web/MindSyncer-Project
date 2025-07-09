@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, NavLink } from 'react-router-dom'
 
 export default function Header() {
   return (
@@ -13,26 +14,62 @@ export default function Header() {
             <span className="text-lg font-semibold text-gray-900">MindSyncer</span>
           </div>
           <nav className="flex space-x-4 bg-gray-100 rounded-full px-2 py-1">
-            <button className="bg-white text-gray-900 px-4 py-2 rounded-full font-medium shadow-sm">
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-full font-medium shadow-sm ${
+                  isActive ? 'bg-gray-200 text-black' : 'bg-white text-gray-900'
+                }`
+              }
+            >
               Home
-            </button>
-            <button className="text-gray-600 px-4 py-2 rounded-full font-medium">
-              Star portfolios
-            </button>
-            <button className="text-gray-600 px-4 py-2 rounded-full font-medium">
+            </NavLink>
+
+            <NavLink
+              to="/StarPortfolios"
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-full font-medium shadow-sm ${
+                  isActive ? 'bg-gray-200 text-black' : 'bg-white text-gray-900'
+                }`
+              }
+            >
+              Star Portfolios
+            </NavLink>
+            <NavLink
+              to="/Pricing"
+              className={({ isActive }) =>
+                `px-4 py-2 rounded-full font-medium shadow-sm ${
+                  isActive ? 'bg-gray-200 text-black' : 'bg-white text-gray-900'
+                }`
+              }
+            >
               Pricing
-            </button>
+            </NavLink>
           </nav>
         </div>
 
         {/* Right Side: Language and Login */}
         <div className="flex items-center space-x-4">
-            <button className="bg-[#0F172A] text-white px-5 py-2 rounded-xl font-medium">
-                SignIn
-            </button>
-            <button className="bg-[#0F172A] text-white px-5 py-2 rounded-xl font-medium">
-                Register/SignUp
-            </button>
+            <NavLink
+              to="/SignIn"
+              className={({ isActive }) =>
+                `bg-[#0F172A]  px-5 py-2 rounded-xl font-medium ${
+                  isActive ? 'text-green-500' : 'text-white'
+                }`
+              }
+            >
+              SignIn
+            </NavLink>
+            <NavLink
+              to="/SignUp"
+              className={({ isActive }) =>
+                `bg-[#0F172A]  px-5 py-2 rounded-xl font-medium ${
+                  isActive ? 'text-green-500' : 'text-white'
+                }`
+              }
+            >
+              Register/SignUp
+            </NavLink>
         </div>
       </div>
     </header>
