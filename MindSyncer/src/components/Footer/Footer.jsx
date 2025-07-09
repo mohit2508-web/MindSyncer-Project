@@ -7,13 +7,13 @@ export default function Footer(){
         <div className="flex justify-between items-start mb-8">
           <div>
             <ul className="space-y-2 text-sm font-medium text-gray-800">
-              <li>Bosh sahifa</li>
-              <li>Vakansiyalar</li>
-              <li>Kompaniyalar</li>
+              <li>Home</li>
+              <li>Help</li>
+              <li>Contact Us</li>
             </ul>
           </div>
           <div className="text-right">
-            <p className="text-sm font-medium text-gray-800 mb-2">Telegram kanal</p>
+            <p className="text-sm font-medium text-gray-800 mb-2">Telegram</p>
             <img
               src="/path-to-your-qr-code.png"
               alt="Telegram QR"
@@ -23,7 +23,7 @@ export default function Footer(){
         </div>
 
         <h1 className="text-6xl sm:text-7xl md:text-8xl font-bold text-gray-900 text-center mb-8">
-          frontendJob
+          Demo Text
         </h1>
 
         <div className="flex justify-between text-sm text-gray-700">
