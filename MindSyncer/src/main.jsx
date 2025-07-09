@@ -5,11 +5,11 @@ import App from './App.jsx'
 import Header from './components/Header/Header.jsx'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import Layout from './Layout.jsx'
-import HeroPage from './components/HeroPage.jsx'
-import Pricing from './components/Pricing.jsx'
-import SignIn from './components/SignIn.jsx'
-import SignUp from './components/SignUp.jsx'
-import StarPortfolios from './components/StarPortfolios.jsx'
+import HeroPage from './components/pages/HeroPage.jsx'
+import Pricing from './components/pages/Pricing.jsx'
+import SignIn from './components/pages/SignIn.jsx'
+import SignUp from './components/pages/SignUp.jsx'
+import StarPortfolios from './components/pages/StarPortfolios.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
