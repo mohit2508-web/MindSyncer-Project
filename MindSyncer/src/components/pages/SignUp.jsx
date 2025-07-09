@@ -39,7 +39,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await axios.post("/auth/register", {
+      await fetch.post("/auth/register", {
         ...formData,
         skills: formData.skills.split(",").map((s) => s.trim()),
       });

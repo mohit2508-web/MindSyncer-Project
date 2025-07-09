@@ -20,7 +20,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post("/auth/login", formData);
+      const res = await fetch.post("/auth/login", formData);
       const { token, user } = res.data;
 
       localStorage.setItem("token", token);
