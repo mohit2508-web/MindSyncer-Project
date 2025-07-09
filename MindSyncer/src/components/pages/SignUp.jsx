@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import App from "../../App";
+import signupImage from "../../assets/SignUp.png";
+
 import {
   FiUser,
   FiMail,
@@ -10,12 +12,6 @@ import {
   FiGlobe,
   FiImage,
 } from "react-icons/fi";
-import {
-  SiLeetcode,
-  SiGeeksforgeeks,
-  SiCodeforces,
-  SiHackerrank,
-} from "react-icons/si";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -57,27 +53,34 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white-100 to-indigo flex items-center justify-center p-2">
-      <div className="bg-white shadow-2xl rounded-xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-400 via-neutral-gray to-black flex items-center justify-center p-2">
+      <div className=" shadow-2xl rounded-xl flex flex-col md:flex-row w-full max-w-5xl overflow-hidden">
         {/* Left Side - Image */}
-        <div className="hidden md:block md:w-1/2 bg-gradient-to-br from-gray-600 to-black-300 p-8 text-black-  items-center justify-center">
+        <div className="hidden md:block md:w-1/2 bg-gradient-to-b from-neutral-900 to-neutral-700 p-8 text-white items-center justify-center">
         
           <div>
             <h2 className="text-4xl font-bold mb-4">Welcome to MindSyncer</h2>
             <p className="text-lg">
               Find your ideal teammates for projects, hackathons & learning.
             </p>
-            <img
-              src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fregistration-page&psig=AOvVaw2jB1CICtk4YS8XVPpLPUvQ&ust=1752127003646000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMi1yvCLr44DFQAAAAAdAAAAABAL"
-              alt="Study"
-              className="mt-6 w-80"
-            />
+           <img
+            src={signupImage}
+            alt="Study"
+            className="mt-120 w-200"
+          />
+
           </div>
         </div>
 
         {/* Right Side - Form */}
-        <form onSubmit={handleSubmit} className="w-full md:w-1/2 p-8 space-y-6">
-          <h2 className="text-3xl font-bold text-center text-black-600">
+       <form
+          onSubmit={handleSubmit}
+          className="w-full md:w-1/2 p-8 space-y-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-r-xl shadow-2xl text-white"
+
+        >
+
+          <h2 className="text-2xl font-bold text-center text-white drop-shadow">
+
             Register Now
           </h2>
         {/* Avatar */}
@@ -88,7 +91,7 @@ export default function Register() {
               name="avatar"
               placeholder="Paste your avatar image URL"
               onChange={handleChange}
-              className="pl-10 w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -101,7 +104,7 @@ export default function Register() {
               required
               placeholder="Full Name"
               onChange={handleChange}
-              className="pl-10 w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -114,7 +117,7 @@ export default function Register() {
               required
               placeholder="Email Address"
               onChange={handleChange}
-              className="pl-10 w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -127,7 +130,7 @@ export default function Register() {
               required
               placeholder="Create Password"
               onChange={handleChange}
-              className="pl-10 w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+             className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -139,7 +142,7 @@ export default function Register() {
               required
               value={formData.role}
               onChange={handleChange}
-              className="pl-10 w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black-400"
+             className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Select Your Role</option>
               <option value="Developer">Developer</option>
@@ -157,7 +160,7 @@ export default function Register() {
               required
               placeholder="e.g., React, Node.js, Figma"
               onChange={handleChange}
-              className="pl-10 w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-black-400"
+              className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <div className="text-sm text-gray-400 mt-1 ml-1">
               💡 Separate skills with commas
@@ -171,7 +174,7 @@ export default function Register() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 rounded-lg font-semibold text-white transition duration-300 ${
+            className={`w-full bg-white/20 text-white font-semibold py-3 rounded-lg transition hover:bg-white/30 hover:text-black ${
               loading
                 ? "bg-gray-700 cursor-not-allowed"
                 : "bg-black hover:bg-gray-900 hover:scale-105"
