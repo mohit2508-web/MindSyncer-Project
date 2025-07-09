@@ -10,6 +10,7 @@ import Pricing from './components/pages/Pricing.jsx'
 import SignIn from './components/pages/SignIn.jsx'
 import SignUp from './components/pages/SignUp.jsx'
 import StarProfiles from './components/pages/StarProfiles.jsx'
+import Explore from './components/pages/Explore.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path='SignIn' element={<SignIn />}/>
       <Route path='SignUp' element={<SignUp />}/>
       <Route path='StarProfiles' element={<StarProfiles />}/>
+      <Route path='Explore' element={<Explore />}/>
     </Route>
   )
 )

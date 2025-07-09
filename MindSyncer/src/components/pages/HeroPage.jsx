@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import Typed from "typed.js";
 
 const HeroPage = () => {
@@ -41,9 +42,14 @@ const HeroPage = () => {
             <button className="bg-black text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-800 transition">
                 Join Now
             </button>
-            <button className="bg-white text-black border border-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-100 transition">
+            <NavLink to="/Explore">
+                <button className="bg-white text-black border border-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-100 transition">
+                    View Profiles
+                </button>
+            </NavLink>
+            {/* <button className="bg-white text-black border border-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-100 transition">
                 View Profiles
-            </button>
+            </button> */}
             </div>
 
             <div className="flex justify-center flex-wrap gap-3 text-sm text-gray-700">

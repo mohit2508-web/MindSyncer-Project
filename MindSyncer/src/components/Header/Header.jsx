@@ -26,7 +26,7 @@ export default function Header() {
                 to={path}
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-full font-medium shadow-sm ${
-                    isActive ? 'bg-gray-200 text-black' : 'bg-white text-gray-900'
+                    isActive ? 'bg-gray-200 text-black ' : 'bg-white text-gray-900'
                   }`
                 }
               >
