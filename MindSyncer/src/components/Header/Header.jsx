@@ -26,14 +26,14 @@ export default function Header() {
             </NavLink>
 
             <NavLink
-              to="/StarPortfolios"
+              to="/StarProfiles"
               className={({ isActive }) =>
                 `px-4 py-2 rounded-full font-medium shadow-sm ${
                   isActive ? 'bg-gray-200 text-black' : 'bg-white text-gray-900'
                 }`
               }
             >
-              Star Portfolios
+              Star Profiles
             </NavLink>
             <NavLink
               to="/Pricing"

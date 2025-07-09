@@ -9,7 +9,7 @@ import HeroPage from './components/pages/HeroPage.jsx'
 import Pricing from './components/pages/Pricing.jsx'
 import SignIn from './components/pages/SignIn.jsx'
 import SignUp from './components/pages/SignUp.jsx'
-import StarPortfolios from './components/pages/StarPortfolios.jsx'
+import StarProfiles from './components/pages/StarProfiles.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,7 +18,7 @@ const router = createBrowserRouter(
       <Route path='Pricing' element={<Pricing />}/>
       <Route path='SignIn' element={<SignIn />}/>
       <Route path='SignUp' element={<SignUp />}/>
-      <Route path='StarPortfolios' element={<StarPortfolios />}/>
+      <Route path='StarProfiles' element={<StarProfiles />}/>
     </Route>
   )
 )
