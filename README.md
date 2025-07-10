@@ -10,6 +10,8 @@ Find your perfect temmate -> coder,designer or innovstor-in seconds
 
 
 # Initialize Node.js project
+
+cd MindSyncer_Server
 npm init -y
 
 # Core dependencies
