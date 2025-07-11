@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import App from "../../App";
 import signupImage from "../../assets/SignUp.png";
+import axios from "axios";
 
 import {
   FiUser,
@@ -14,18 +15,14 @@ import {
 } from "react-icons/fi";
 
 export default function Register() {
+ const apiUrl = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     role: "",
     skills: "",
-    leetcode: "",
-    gfg: "",
-    codeforces: "",
-    hackerrank: "",
-    portfolio: "",
-    avatar: "",
+  
   });
 
   const [loading, setLoading] = useState(false);
@@ -39,10 +36,13 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await fetch.post("/auth/register", {
-        ...formData,
-        skills: formData.skills.split(",").map((s) => s.trim()),
-      });
+       await axios.post(`${apiUrl}/register`, {
+      fullName: formData.name,
+      emailAddress: formData.email,
+      password: formData.password,
+      role: formData.role,
+      skills: formData.skills
+       }),
       alert("Registration successful!");
       navigate("/login");
     } catch (err) {
@@ -83,18 +83,6 @@ export default function Register() {
 
             Register Now
           </h2>
-        {/* Avatar */}
-          <div className="relative">
-            <FiImage className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-            <input
-              type="url"
-              name="avatar"
-              placeholder="Paste your avatar image URL"
-              onChange={handleChange}
-              className="w-full p-3 bg-gray-600 pl-12 border-gray-500 text-white placeholder-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
           {/* Name */}
           <div className="relative">
             <FiUser className="absolute left-3 top-3 text-gray-400" />
