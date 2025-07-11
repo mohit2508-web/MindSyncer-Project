@@ -17,22 +17,6 @@ export default function Footer() {
             <div className="bg-[#0F172A] text-white p-2 rounded-xl">{'</>'}</div>
             MindSyncer
           </div>
-          <p className="mt-4 text-sm text-gray-600">
-            Subscribe to our newsletter for the latest updates on features and releases.
-          </p>
-          <div className="mt-4 flex">
-            <input
-              type="email"
-              placeholder="Your email here"
-              className="w-full px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none"
-            />
-            <button className="px-4 py-2 bg-black text-white rounded-r-lg hover:bg-gray-900">
-              Join
-            </button>
-          </div>
-          <p className="mt-2 text-xs text-gray-500">
-            By subscribing, you consent to our Privacy Policy and agree to receive updates.
-          </p>
         </div>
 
         {/* Quick Links */}
