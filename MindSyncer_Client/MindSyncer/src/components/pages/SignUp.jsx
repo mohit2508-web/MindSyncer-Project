@@ -41,7 +41,7 @@ export default function AuthPage() {
           password: formData.password,
         });
         alert("Login successful!");
-        navigate("/dashboard"); // 👈 apni page ka route change kar lo
+        navigate("/"); // 👈 apni page ka route change kar lo
       } else {
         // Register request
         await axios.post(`${apiUrl}/register`, {
