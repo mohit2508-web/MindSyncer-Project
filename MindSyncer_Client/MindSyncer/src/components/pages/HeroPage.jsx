@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Typed from "typed.js";
+import { Link } from "react-router-dom";
 
 const HeroPage = () => {
   const typedRef = useRef(null);
@@ -39,9 +40,11 @@ const HeroPage = () => {
             </p>
 
             <div className="flex justify-center gap-4 flex-wrap mb-10">
-            <button className="bg-black text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-800 transition">
-                Join Now
-            </button>
+            <Link to="/SignUp"> 
+                <button className="bg-black text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-800 transition">
+                    Join Now
+                </button>
+            </Link>
             <NavLink to="/Explore">
                 <button className="bg-white text-black border border-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-100 transition">
                     View Profiles
@@ -118,12 +121,14 @@ const HeroPage = () => {
             </div>
         </section>
 
-        <section className="py-20 px-6 md:px-20 bg-[#0F172A] text-white text-center rounded-t-3xl">
+        <section className="py-20 px-6 md:px-20 bg-black text-white text-center rounded-3xl">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to build your dream team?</h2>
             <p className="mb-8 text-lg max-w-2xl mx-auto">Join a fast-growing community of developers, designers, and creators today. Your next teammate is waiting.</p>
-            <button className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md hover:bg-gray-200 transition">
-                Get Started Free
-            </button>
+            <Link to="/SignUp">
+                <button className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md hover:bg-gray-200 transition">
+                    Get Started Free
+                </button>
+            </Link>
         </section>
 
 
