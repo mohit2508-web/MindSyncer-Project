@@ -71,3 +71,8 @@ backend/
 ├── .gitignore
 ├── package.json
 └── server.js          
+
+
+# bcrypt
+
+npm install bcrypt
