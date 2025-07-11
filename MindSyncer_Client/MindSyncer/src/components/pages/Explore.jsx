@@ -48,7 +48,7 @@ export default function Explore() {
     <div className="max-w-10xl mx-auto mt-6 mb-8 px-4">
       {/* Developer Section */}
       <section>
-        <div className="max-w-4xl mx-auto text-center py-20">
+        <div className="max-w-4xl mx-auto text-center py-16">
           <h2 className="text-xl font-semibold mb-6">🔥 Explore by Categories</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {['Frontend', 'Backend', 'AI/ML', 'UI/UX', 'DevOps', 'Open Source'].map((skill) => (
