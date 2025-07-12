@@ -36,7 +36,7 @@ export default function UserDashboard() {
       localStorage.removeItem("user");
       navigate("/SignUp");
     }
-  }, []);
+  }, [apiUrl, navigate]);
 
   if (!userData) {
     return (
@@ -46,71 +46,94 @@ export default function UserDashboard() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] flex flex-col items-center justify-center p-6 text-white overflow-y-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="bg-white/10 backdrop-blur-3xl border border-white/30 rounded-3xl p-10 w-full max-w-5xl shadow-2xl"
-      >
-        <h1 className="text-5xl font-extrabold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 drop-shadow-md">
-          🚀 Welcome, {userData.fullName || "User"}!
-        </h1>
+    return (
+    <div className="flex h-screen bg-gray-100 text-gray-800">
+      {/* Sidebar */}
+      <div className="w-64 bg-black text-white flex flex-col justify-between p-6">
+        <div>
+          {/* Profile */}
+          <div className="flex items-center mb-8">
+            <img
+              src="https://i.pravatar.cc/150?img=32"
+              alt="User Avatar"
+              className="w-14 h-14 rounded-full mr-4"
+            />
+            <div>
+              <h2 className="font-semibold text-lg">{userData.fullName || "User"}</h2>
+              <p className="text-sm text-gray-300">{userData.emailAddress}</p>
+            </div>
+          </div>
 
-        {/* User Basic Details */}
-        <Section title="Your Info">
-          <DetailCard icon={<FiUser className="text-4xl text-blue-400" />} label="Full Name" value={userData.fullName || "N/A"} />
-          <DetailCard icon={<FiMail className="text-4xl text-pink-400" />} label="Email" value={userData.emailAddress} />
-          <DetailCard icon={<FiBriefcase className="text-4xl text-green-400" />} label="Role" value={userData.role || "N/A"} />
-          <DetailCard
-            icon={<FiCode className="text-4xl text-yellow-400" />}
-            label="Skills"
-            value={Array.isArray(userData.skills) ? userData.skills.join(", ") : userData.skills || "N/A"}
-          />
-        </Section>
+          {/* Navigation */}
+          <nav className="space-y-4 text-sm">
+            <p className="font-semibold text-white">Dashboard</p>
+            <p className="text-gray-400">Expenses</p>
+            <p className="text-gray-400">Wallets</p>
+            <p className="text-gray-400">Summary</p>
+            <p className="text-gray-400">Accounts</p>
+            <p className="text-gray-400">Settings</p>
+          </nav>
+        </div>
 
-        {/* Projects Section */}
-        <Section title="Projects">
-          <DetailCard icon={<FiFolder className="text-4xl text-purple-400" />} label="Project 1" value="E-commerce website" />
-          <DetailCard icon={<FiFolder className="text-4xl text-purple-400" />} label="Project 2" value="Portfolio app" />
-          <DetailCard icon={<FiFolder className="text-4xl text-purple-400" />} label="Project 3" value="AI chatbot" />
-        </Section>
-
-        {/* Coding Profiles Section */}
-        <Section title="Coding Profiles">
-          <DetailCard icon={<FiGithub className="text-4xl text-gray-300" />} label="GitHub" value="github.com/username" />
-          <DetailCard icon={<FiCode className="text-4xl text-orange-400" />} label="LeetCode" value="leetcode.com/username" />
-          <DetailCard icon={<FiCode className="text-4xl text-green-300" />} label="CodeChef" value="codechef.com/users/username" />
-        </Section>
-
-        {/* Achievements Section */}
-        <Section title="Achievements">
-          <DetailCard icon={<FiAward className="text-4xl text-yellow-400" />} label="Hackathon Winner" value="Won CodeFest 2024" />
-          <DetailCard icon={<FiAward className="text-4xl text-yellow-400" />} label="Top Contributor" value="Open source projects" />
-        </Section>
-
+        {/* Logout */}
         <button
           onClick={() => {
             localStorage.removeItem("user");
             navigate("/SignUp");
           }}
-          className="mt-10 w-full bg-gradient-to-r from-red-500 via-pink-600 to-red-700 hover:from-red-600 hover:via-pink-700 hover:to-red-800 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:scale-105"
+          className="mt-8 w-full bg-gradient-to-r from-red-500 to-pink-500 hover:brightness-110 text-white py-2 rounded-lg flex items-center justify-center gap-2"
         >
           <FiLogOut /> Logout
         </button>
-      </motion.div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 p-10 overflow-y-auto">
+        <h1 className="text-3xl font-bold mb-6">Welcome, {userData.fullName || "User"}!</h1>
+
+        {/* User Info */}
+        <Section title="Your Info">
+          <DetailCard icon={<FiUser />} label="Full Name" value={userData.fullName || "N/A"} />
+          <DetailCard icon={<FiMail />} label="Email" value={userData.emailAddress || "N/A"} />
+          <DetailCard icon={<FiBriefcase />} label="Role" value={userData.role || "N/A"} />
+          <DetailCard
+            icon={<FiCode />}
+            label="Skills"
+            value={Array.isArray(userData.skills) ? userData.skills.join(", ") : userData.skills || "N/A"}
+          />
+        </Section>
+
+        {/* Projects */}
+        <Section title="Projects">
+          <DetailCard icon={<FiFolder />} label="Project 1" value="E-commerce website" />
+          <DetailCard icon={<FiFolder />} label="Project 2" value="Portfolio app" />
+          <DetailCard icon={<FiFolder />} label="Project 3" value="AI chatbot" />
+        </Section>
+
+        {/* Coding Profiles */}
+        <Section title="Coding Profiles">
+          <DetailCard icon={<FiGithub />} label="GitHub" value="github.com/username" />
+          <DetailCard icon={<FiCode />} label="LeetCode" value="leetcode.com/username" />
+          <DetailCard icon={<FiCode />} label="CodeChef" value="codechef.com/users/username" />
+        </Section>
+
+        {/* Achievements */}
+        <Section title="Achievements">
+          <DetailCard icon={<FiAward />} label="Hackathon Winner" value="Won CodeFest 2024" />
+          <DetailCard icon={<FiAward />} label="Top Contributor" value="Open source projects" />
+        </Section>
+      </div>
     </div>
   );
 }
 
 function DetailCard({ icon, label, value }) {
   return (
-    <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 flex items-center space-x-4 border border-white/20 shadow-lg hover:scale-[1.03] hover:border-white/40 transition-all duration-300">
-      {icon}
+    <div className="bg-white p-4 rounded-lg shadow flex items-center space-x-4 border">
+      <div className="text-xl text-blue-600">{icon}</div>
       <div>
-        <p className="text-gray-300 text-sm">{label}</p>
-        <p className="font-semibold break-words">{value}</p>
+        <p className="text-sm text-gray-500">{label}</p>
+        <p className="font-medium">{value}</p>
       </div>
     </div>
   );
@@ -118,11 +141,9 @@ function DetailCard({ icon, label, value }) {
 
 function Section({ title, children }) {
   return (
-    <>
-      <h2 className="mt-12 mb-6 text-3xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-green-400 via-blue-400 to-purple-500">
-        {title}
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">{children}</div>
-    </>
+    <div className="mb-10">
+      <h2 className="text-2xl font-semibold mb-4">{title}</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">{children}</div>
+    </div>
   );
 }
