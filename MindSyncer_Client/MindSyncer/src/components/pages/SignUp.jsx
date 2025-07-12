@@ -13,7 +13,7 @@ import {
 
 export default function AuthPage() {
   const apiUrl = import.meta.env.VITE_API_URL;
-  const [isLogin, setIsLogin] = useState(false); // ⭐ toggle register/login
+  const [isLogin, setIsLogin] = useState(true); // ⭐ toggle register/login
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,14 +34,20 @@ export default function AuthPage() {
     setLoading(true);
 
     try {
-      if (isLogin) {
+        if (isLogin) {
         // Login request
-        await axios.post(`${apiUrl}/login`, {
+          const res = await axios.post(`${apiUrl}/login`, {
           emailAddress: formData.email,
           password: formData.password,
         });
-        alert("Login successful!");
-        navigate("/"); // 👈 apni page ka route change kar lo
+
+        // ✅ Successful login ke baad
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+          alert("Login successful!");
+
+          // ✅ Redirect to dashboard
+          navigate("/dashboard");
+  
       } else {
         // Register request
         await axios.post(`${apiUrl}/register`, {

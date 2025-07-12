@@ -39,16 +39,6 @@ export default function Header() {
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center space-x-4">
           <NavLink
-            to="/SignIn"
-            className={({ isActive }) =>
-              `bg-[#0F172A] px-5 py-2 rounded-xl font-medium ${
-                isActive ? 'text-green-500' : 'text-white'
-              }`
-            }
-          >
-            SignIn
-          </NavLink>
-          <NavLink
             to="/SignUp"
             className={({ isActive }) =>
               `bg-[#0F172A] px-5 py-2 rounded-xl font-medium ${
@@ -56,7 +46,7 @@ export default function Header() {
               }`
             }
           >
-            Register/SignUp
+            Register/Login
           </NavLink>
         </div>
 
@@ -103,17 +93,7 @@ export default function Header() {
             >
               Pricing
             </NavLink>
-            <NavLink
-              to="/SignIn"
-              className={({ isActive }) =>
-                `bg-[#0F172A] px-4 py-2 rounded-xl font-medium ${
-                  isActive ? 'text-green-500' : 'text-white'
-                }`
-              }
-              onClick={() => setIsMenuOpen(false)}
-            >
-              SignIn
-            </NavLink>
+  
             <NavLink
               to="/SignUp"
               className={({ isActive }) =>
@@ -123,7 +103,7 @@ export default function Header() {
               }
               onClick={() => setIsMenuOpen(false)}
             >
-              Register/SignUp
+              Register/SignIn
             </NavLink>
           </div>
         </div>

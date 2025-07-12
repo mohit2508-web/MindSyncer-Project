@@ -15,3 +15,8 @@ If you are developing a production application, we recommend using TypeScript wi
 # axios
 
 npm install axios
+
+
+# Framer-motion
+
+ npm install framer-motion

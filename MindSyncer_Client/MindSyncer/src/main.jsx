@@ -7,20 +7,28 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import Layout from './Layout.jsx'
 import HeroPage from './components/pages/HeroPage.jsx'
 import Pricing from './components/pages/Pricing.jsx'
-import SignIn from './components/pages/SignIn.jsx'
 import SignUp from './components/pages/SignUp.jsx'
 import StarProfiles from './components/pages/StarProfiles.jsx'
 import Explore from './components/pages/Explore.jsx'
+import UserDashboard from './components/pages/UserDashboard.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout />}>
       <Route path='' element={<HeroPage />}/>
       <Route path='Pricing' element={<Pricing />}/>
-      <Route path='SignIn' element={<SignIn />}/>
       <Route path='SignUp' element={<SignUp />}/>
       <Route path='StarProfiles' element={<StarProfiles />}/>
       <Route path='Explore' element={<Explore />}/>
+       <Route 
+        path="dashboard" 
+        element={
+          <ProtectedRoute>
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Route>
   )
 )
