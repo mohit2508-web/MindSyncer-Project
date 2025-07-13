@@ -96,3 +96,14 @@ export const getUserById = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({}, 'fullName role skills'); // Sirf yahi fields bhejne hain
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Get all users error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

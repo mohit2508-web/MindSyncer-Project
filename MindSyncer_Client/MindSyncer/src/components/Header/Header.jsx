@@ -117,7 +117,7 @@ export default function Header() {
             <button 
               onClick={() => setPopupOpen(true)}
               className="bg-[#0F172A] px-4 py-2 rounded-xl font-medium text-white">
-              Contact US
+              Contact Us
             </button>
             <ContactUsPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
           </div>
