@@ -69,7 +69,7 @@ export default function UserDashboard() {
           <nav className="space-y-4 text-lg">
             <button onClick={() => setActiveSection("dashboard")} className="text-left w-full text-gray-300 hover:text-white">Dashboard</button>
             <button onClick={() => setActiveSection("connections")} className="text-left w-full text-gray-300 hover:text-white">Connections</button>
-            <button onClick={() => setActiveSection("explore")} className="text-left w-full text-gray-300 hover:text-white">Explore</button>
+            <button onClick={() => navigate("/Explore")} className="text-left w-full text-gray-300 hover:text-white">Explore</button>
             <button onClick={() => setActiveSection("notifications")} className="text-left w-full text-gray-300 hover:text-white">Notification</button>
             <button onClick={() => setActiveSection("edit-profile")} className="text-left w-full text-gray-300 hover:text-white">Edit Profile</button>
             <button onClick={() => setActiveSection("settings")} className="text-left w-full text-gray-300 hover:text-white">Settings</button>
