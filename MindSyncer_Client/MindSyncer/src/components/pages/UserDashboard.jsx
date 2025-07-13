@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import axios from "axios";
 import {
   FiLogOut, FiMail, FiUser, FiBriefcase, FiCode, FiFolder, FiAward, FiGithub,
 } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 export default function UserDashboard() {
   const [userData, setUserData] = useState(null);
   const [activeSection, setActiveSection] = useState("dashboard");
+  const [editForm, setEditForm] = useState({
+    fullName: "",
+    emailAddress: "",
+    role: "",
+    skills: "",
+  });
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -26,6 +32,13 @@ export default function UserDashboard() {
       axios.get(`${apiUrl}/${userId}`)
         .then((res) => {
           setUserData(res.data);
+
+          setEditForm({
+            fullName: res.data.fullName,
+            emailAddress: res.data.emailAddress,
+            role: res.data.role,
+            skills: Array.isArray(res.data.skills) ? res.data.skills.join(", ") : "",
+          });
         })
         .catch((error) => {
           console.error("Failed to fetch user:", error);
@@ -38,6 +51,34 @@ export default function UserDashboard() {
       navigate("/SignUp");
     }
   }, [apiUrl, navigate]);
+
+  const handleEditChange = (e) => {
+    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+
+    const updatedData = {
+      fullName: editForm.fullName,
+      emailAddress: editForm.emailAddress,
+      role: editForm.role,
+      skills: editForm.skills ? editForm.skills.split(",").map((s) => s.trim()) : [],
+    };
+
+    try {
+      // ✅ Yeh fix: id ki jagah _id
+      const res = await axios.put(`${apiUrl}/${userData._id}`, updatedData);
+      alert("Profile updated successfully!");
+
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      setUserData(res.data.user);
+      setActiveSection("dashboard");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
+    }
+  };
 
   if (!userData) {
     return (
@@ -52,7 +93,6 @@ export default function UserDashboard() {
       {/* Sidebar */}
       <div className="w-64 bg-black text-white flex flex-col justify-between p-6">
         <div>
-          {/* Profile */}
           <div className="flex items-center mb-8">
             <img
               src="https://i.pravatar.cc/150?img=32"
@@ -65,7 +105,6 @@ export default function UserDashboard() {
             </div>
           </div>
 
-          {/* Navigation */}
           <nav className="space-y-4 text-lg">
             <button onClick={() => setActiveSection("dashboard")} className="text-left w-full text-gray-300 hover:text-white">Dashboard</button>
             <button onClick={() => setActiveSection("connections")} className="text-left w-full text-gray-300 hover:text-white">Connections</button>
@@ -76,7 +115,6 @@ export default function UserDashboard() {
           </nav>
         </div>
 
-        {/* Logout */}
         <button
           onClick={() => {
             localStorage.removeItem("user");
@@ -122,56 +160,45 @@ export default function UserDashboard() {
           </>
         )}
 
-        {activeSection === "connections" && (
-          <Section title="Your Connections">
-            <div className="grid gap-4">
-              {["Jane Doe", "John Smith", "Alice Kumar"].map((name, index) => (
-                <div key={index} className="bg-white p-5 rounded-lg shadow-md flex items-center space-x-4">
-                  <img
-                    src={`https://i.pravatar.cc/100?img=${index + 10}`}
-                    className="w-14 h-14 rounded-full"
-                    alt={name}
-                  />
-                  <div>
-                    <p className="font-bold text-gray-700">{name}</p>
-                    <p className="text-gray-500 text-sm">Full Stack Developer</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Section>
-        )}
-
-        {activeSection === "notifications" && (
-          <Section title="Notifications">
-            <div className="space-y-4">
-              <div className="bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow">
-                🔔 Your profile has been viewed 10 times today!
-              </div>
-              <div className="bg-green-100 text-green-800 p-4 rounded-lg shadow">
-                ✅ Project “Portfolio App” received 3 new stars on GitHub.
-              </div>
-              <div className="bg-red-100 text-red-800 p-4 rounded-lg shadow">
-                ⚠️ Connection request from "Unknown User" was declined.
-              </div>
-            </div>
-          </Section>
-        )}
-
         {activeSection === "edit-profile" && (
           <Section title="Edit Your Profile">
-            <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleEditSubmit}>
               <div>
                 <label className="block mb-1 text-gray-700">Full Name</label>
-                <input className="w-full p-2 border border-gray-300 rounded" defaultValue={userData.fullName} />
+                <input
+                  name="fullName"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editForm.fullName}
+                  onChange={handleEditChange}
+                />
               </div>
               <div>
                 <label className="block mb-1 text-gray-700">Email</label>
-                <input className="w-full p-2 border border-gray-300 rounded" defaultValue={userData.emailAddress} />
+                <input
+                  name="emailAddress"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editForm.emailAddress}
+                  onChange={handleEditChange}
+                />
+              </div>
+              <div>
+                <label className="block mb-1 text-gray-700">Role</label>
+                <input
+                  name="role"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editForm.role}
+                  onChange={handleEditChange}
+                />
               </div>
               <div className="col-span-2">
                 <label className="block mb-1 text-gray-700">Skills</label>
-                <input className="w-full p-2 border border-gray-300 rounded" defaultValue={userData.skills?.join(", ")} />
+                <input
+                  name="skills"
+                  className="w-full p-2 border border-gray-300 rounded"
+                  value={editForm.skills}
+                  onChange={handleEditChange}
+                  placeholder="Comma separated e.g. JavaScript, React"
+                />
               </div>
               <button
                 type="submit"
@@ -180,25 +207,6 @@ export default function UserDashboard() {
                 Save Changes
               </button>
             </form>
-          </Section>
-        )}
-
-        {activeSection === "settings" && (
-          <Section title="Settings">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between bg-white p-4 rounded shadow">
-                <span className="text-gray-700">Dark Mode</span>
-                <input type="checkbox" className="w-5 h-5" />
-              </div>
-              <div className="flex items-center justify-between bg-white p-4 rounded shadow">
-                <span className="text-gray-700">Email Notifications</span>
-                <input type="checkbox" className="w-5 h-5" defaultChecked />
-              </div>
-              <div className="flex items-center justify-between bg-white p-4 rounded shadow">
-                <span className="text-gray-700">Auto Save</span>
-                <input type="checkbox" className="w-5 h-5" />
-              </div>
-            </div>
           </Section>
         )}
       </div>

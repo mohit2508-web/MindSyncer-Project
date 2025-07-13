@@ -85,7 +85,7 @@ export const getUserById = async (req, res) => {
     }
 
     res.status(200).json({
-      id: user._id,
+      _id: user._id,
       fullName: user.fullName,
       emailAddress: user.emailAddress,
       role: user.role,
@@ -105,5 +105,35 @@ export const getAllUsers = async (req, res) => {
   } catch (error) {
     console.error('Get all users error:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// PUT /api/users/:id
+// PUT /api/users/:id
+export const updateUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          fullName: req.body.fullName,
+          emailAddress: req.body.emailAddress,
+          role: req.body.role,
+          skills: req.body.skills,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ user: updatedUser });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).json({ message: "Error updating user" });
   }
 };

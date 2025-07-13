@@ -12,6 +12,7 @@ import StarProfiles from './components/pages/StarProfiles.jsx'
 import Explore from './components/pages/Explore.jsx'
 import UserDashboard from './components/pages/UserDashboard.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import EditProfile from './components/pages/EditProfile.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path='SignUp' element={<SignUp />}/>
       <Route path='StarProfiles' element={<StarProfiles />}/>
       <Route path='Explore' element={<Explore />}/>
+      <Route path="EditProfile" element={<EditProfile />} />
        <Route 
         path="dashboard" 
         element={
