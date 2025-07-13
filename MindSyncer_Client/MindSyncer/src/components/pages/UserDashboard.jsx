@@ -1,20 +1,31 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
-  FiLogOut, FiMail, FiUser, FiBriefcase, FiCode, FiFolder, FiAward, FiGithub,
+  FiLogOut,
+  FiMail,
+  FiUser,
+  FiBriefcase,
+  FiCode,
+  FiFolder,
+  FiAward,
+  FiGithub,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 export default function UserDashboard() {
   const [userData, setUserData] = useState(null);
   const [activeSection, setActiveSection] = useState("dashboard");
+  const [profileDropdown, setProfileDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [editForm, setEditForm] = useState({
     fullName: "",
     emailAddress: "",
     role: "",
     skills: "",
   });
+
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -29,24 +40,19 @@ export default function UserDashboard() {
       const user = JSON.parse(userStr);
       const userId = user.id;
 
-      axios.get(`${apiUrl}/${userId}`)
-        .then((res) => {
-          setUserData(res.data);
-
-          setEditForm({
-            fullName: res.data.fullName,
-            emailAddress: res.data.emailAddress,
-            role: res.data.role,
-            skills: Array.isArray(res.data.skills) ? res.data.skills.join(", ") : "",
-          });
-        })
-        .catch((error) => {
-          console.error("Failed to fetch user:", error);
-          localStorage.removeItem("user");
-          navigate("/SignUp");
+      axios.get(`${apiUrl}/${userId}`).then((res) => {
+        setUserData(res.data);
+        setEditForm({
+          fullName: res.data.fullName,
+          emailAddress: res.data.emailAddress,
+          role: res.data.role,
+          skills: Array.isArray(res.data.skills)
+            ? res.data.skills.join(", ")
+            : "",
         });
+      });
     } catch (error) {
-      console.error("Failed to parse user:", error);
+      console.error("Failed to load user:", error);
       localStorage.removeItem("user");
       navigate("/SignUp");
     }
@@ -58,40 +64,112 @@ export default function UserDashboard() {
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
-
     const updatedData = {
       fullName: editForm.fullName,
       emailAddress: editForm.emailAddress,
       role: editForm.role,
-      skills: editForm.skills ? editForm.skills.split(",").map((s) => s.trim()) : [],
+      skills: editForm.skills
+        ? editForm.skills.split(",").map((s) => s.trim())
+        : [],
     };
 
     try {
-      // ✅ Yeh fix: id ki jagah _id
       const res = await axios.put(`${apiUrl}/${userData._id}`, updatedData);
       alert("Profile updated successfully!");
-
       localStorage.setItem("user", JSON.stringify(res.data.user));
       setUserData(res.data.user);
       setActiveSection("dashboard");
     } catch (error) {
-      console.error("Error updating profile:", error);
       alert("Error updating profile");
     }
   };
 
   if (!userData) {
     return (
-      <div className="h-screen flex items-center justify-center bg-gradient-to-br from-gray-700 via-gray-900 to-black text-white">
-        Loading your dashboard...
+      <div className="h-screen flex items-center justify-center bg-gray-800 text-white">
+        Loading...
       </div>
     );
   }
 
   return (
-    <div className="h-screen w-full flex overflow-hidden rounded-3xl">
-      {/* Sidebar */}
-      <div className="w-64 bg-black text-white flex flex-col justify-between p-6">
+    <div className="min-h-screen w-full flex flex-col lg:flex-row">
+      {/* Top Navbar (Mobile Only) */}
+      <div className="lg:hidden flex items-center justify-between px-4 py-3 bg-black text-white relative z-40">
+        {/* Profile Avatar */}
+        <div className="relative">
+          <img
+            src="https://i.pravatar.cc/150?img=32"
+            alt="Avatar"
+            className="w-10 h-10 rounded-full cursor-pointer"
+            onClick={() => {
+              setProfileDropdown(!profileDropdown);
+              setMobileMenuOpen(false);
+            }}
+          />
+          {profileDropdown && (
+            <div className="absolute top-12 left-0 bg-white text-black p-4 rounded shadow-lg z-50 w-64">
+              <p className="font-bold">{userData.fullName}</p>
+              <p className="text-sm text-gray-500">
+                {userData.emailAddress}
+              </p>
+              <p className="mt-2 text-sm text-gray-600">
+                Role: {userData.role}
+              </p>
+              <button
+                className="mt-4 w-full text-left text-red-600 font-semibold"
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  navigate("/SignUp");
+                }}
+              >
+                <FiLogOut className="inline-block mr-2" /> Logout
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* User Name */}
+        <h1 className="text-lg font-semibold">{userData.fullName}</h1>
+
+        {/* Hamburger Menu */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setMobileMenuOpen(!mobileMenuOpen);
+              setProfileDropdown(false);
+            }}
+            className="text-2xl"
+          >
+            &#9776;
+          </button>
+          {mobileMenuOpen && (
+            <div className="absolute top-12 right-0 bg-white text-black p-4 rounded shadow-lg z-50 w-48 space-y-3 text-sm">
+              <button onClick={() => setActiveSection("dashboard")} className="text-left w-full text-black hover:text-white">
+                Dashboard
+              </button>
+              <button onClick={() => setActiveSection("connections")} className="text-left w-full text-black hover:text-white">
+                Connections
+              </button>
+              <button onClick={() => navigate("/Explore")} className="text-left w-full text-black hover:text-white">
+                Explore
+              </button>
+              <button onClick={() => setActiveSection("notifications")} className="text-left w-full text-black hover:text-white">
+                Notifications
+              </button>
+              <button onClick={() => setActiveSection("edit-profile")} className="text-left w-full text-black hover:text-white">
+                Edit Profile
+              </button>
+              <button onClick={() => setActiveSection("settings")} className="text-left w-full text-black hover:text-white">
+                Settings
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Sidebar (Desktop Only) */}
+      <div className="hidden lg:flex w-64 bg-black text-white flex-col justify-between p-6">
         <div>
           <div className="flex items-center mb-8">
             <img
@@ -100,18 +178,48 @@ export default function UserDashboard() {
               className="w-14 h-14 rounded-full mr-4"
             />
             <div>
-              <h2 className="font-bold text-lg">{userData.fullName || "User"}</h2>
+              <h2 className="font-bold text-lg">{userData.fullName}</h2>
               <p className="text-sm text-gray-300">{userData.emailAddress}</p>
             </div>
           </div>
 
           <nav className="space-y-4 text-lg">
-            <button onClick={() => setActiveSection("dashboard")} className="text-left w-full text-gray-300 hover:text-white">Dashboard</button>
-            <button onClick={() => setActiveSection("connections")} className="text-left w-full text-gray-300 hover:text-white">Connections</button>
-            <button onClick={() => navigate("/Explore")} className="text-left w-full text-gray-300 hover:text-white">Explore</button>
-            <button onClick={() => setActiveSection("notifications")} className="text-left w-full text-gray-300 hover:text-white">Notification</button>
-            <button onClick={() => setActiveSection("edit-profile")} className="text-left w-full text-gray-300 hover:text-white">Edit Profile</button>
-            <button onClick={() => setActiveSection("settings")} className="text-left w-full text-gray-300 hover:text-white">Settings</button>
+            <button
+              onClick={() => setActiveSection("dashboard")}
+              className="text-left w-full text-gray-300 hover:text-white"
+            >
+              Dashboard
+            </button>
+            <button
+              onClick={() => setActiveSection("connections")}
+              className="text-left w-full text-gray-300 hover:text-white"
+            >
+              Connections
+            </button>
+            <button
+              onClick={() => navigate("/Explore")}
+              className="text-left w-full text-gray-300 hover:text-white"
+            >
+              Explore
+            </button>
+            <button
+              onClick={() => setActiveSection("notifications")}
+              className="text-left w-full text-gray-300 hover:text-white"
+            >
+              Notification
+            </button>
+            <button
+              onClick={() => setActiveSection("edit-profile")}
+              className="text-left w-full text-gray-300 hover:text-white"
+            >
+              Edit Profile
+            </button>
+            <button
+              onClick={() => setActiveSection("settings")}
+              className="text-left w-full text-gray-300 hover:text-white"
+            >
+              Settings
+            </button>
           </nav>
         </div>
 
@@ -127,18 +235,14 @@ export default function UserDashboard() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 px-10 py-8 overflow-y-auto bg-gradient-to-br from-white via-blue-50 to-blue-100">
+      <div className="flex-1 px-4 sm:px-6 md:px-10 py-6 md:py-8 overflow-y-auto bg-gradient-to-br from-white via-blue-50 to-blue-100">
         {activeSection === "dashboard" && (
           <>
             <Section title="Your Info">
-              <DetailCard icon={<FiUser />} label="Full Name" value={userData.fullName || "N/A"} />
-              <DetailCard icon={<FiMail />} label="Email" value={userData.emailAddress || "N/A"} />
-              <DetailCard icon={<FiBriefcase />} label="Role" value={userData.role || "N/A"} />
-              <DetailCard
-                icon={<FiCode />}
-                label="Skills"
-                value={Array.isArray(userData.skills) ? userData.skills.join(", ") : userData.skills || "N/A"}
-              />
+              <DetailCard icon={<FiUser />} label="Full Name" value={userData.fullName} />
+              <DetailCard icon={<FiMail />} label="Email" value={userData.emailAddress} />
+              <DetailCard icon={<FiBriefcase />} label="Role" value={userData.role} />
+              <DetailCard icon={<FiCode />} label="Skills" value={userData.skills.join(", ")} />
             </Section>
 
             <Section title="Projects">
@@ -228,7 +332,7 @@ function DetailCard({ icon, label, value }) {
       </div>
       <div className="min-w-0">
         <p className="text-sm text-gray-500 truncate">{label}</p>
-        <p className="font-semibold break-words whitespace-normal text-base max-w-xs">
+        <p className="font-semibold break-words whitespace-normal text-base max-w-full sm:max-w-xs">
           {value}
         </p>
       </div>
@@ -242,7 +346,7 @@ function Section({ title, children }) {
       <h2 className="text-2xl font-bold text-gray-700 mb-5 border-b border-gray-300 pb-2">
         {title}
       </h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
         {children}
       </div>
     </div>

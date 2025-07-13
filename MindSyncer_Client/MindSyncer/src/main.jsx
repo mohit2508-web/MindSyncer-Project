@@ -13,6 +13,7 @@ import Explore from './components/pages/Explore.jsx'
 import UserDashboard from './components/pages/UserDashboard.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import EditProfile from './components/pages/EditProfile.jsx'
+import AboutUs from './components/pages/AboutUs.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path='StarProfiles' element={<StarProfiles />}/>
       <Route path='Explore' element={<Explore />}/>
       <Route path="EditProfile" element={<EditProfile />} />
+      <Route path="/AboutUs" element={<AboutUs />} />
        <Route 
         path="dashboard" 
         element={
