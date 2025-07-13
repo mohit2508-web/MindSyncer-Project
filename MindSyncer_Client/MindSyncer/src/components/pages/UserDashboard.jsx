@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {motion} from "framer-motion"
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import axios from "axios";
 import {
   FiLogOut, FiMail, FiUser, FiBriefcase, FiCode, FiFolder, FiAward, FiGithub,
@@ -9,6 +8,7 @@ import {
 
 export default function UserDashboard() {
   const [userData, setUserData] = useState(null);
+  const [activeSection, setActiveSection] = useState("dashboard");
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -67,19 +67,12 @@ export default function UserDashboard() {
 
           {/* Navigation */}
           <nav className="space-y-4 text-lg">
-            <p className="font-semibold text-white">Dashboard</p>
-            <p className="text-gray-400">Your Info</p>
-            <div>
-              <Link
-                to="/Explore"
-                className="text-gray-400"
-              >
-                Explore
-              </Link>
-            </div>
-            {/* <p className="text-gray-400">Add Post</p> */}
-            <p className="text-gray-400">Edit Profile</p>
-            <p className="text-gray-400">Settings</p>
+            <button onClick={() => setActiveSection("dashboard")} className="text-left w-full text-gray-300 hover:text-white">Dashboard</button>
+            <button onClick={() => setActiveSection("connections")} className="text-left w-full text-gray-300 hover:text-white">Connections</button>
+            <button onClick={() => setActiveSection("explore")} className="text-left w-full text-gray-300 hover:text-white">Explore</button>
+            <button onClick={() => setActiveSection("notifications")} className="text-left w-full text-gray-300 hover:text-white">Notification</button>
+            <button onClick={() => setActiveSection("edit-profile")} className="text-left w-full text-gray-300 hover:text-white">Edit Profile</button>
+            <button onClick={() => setActiveSection("settings")} className="text-left w-full text-gray-300 hover:text-white">Settings</button>
           </nav>
         </div>
 
@@ -97,39 +90,117 @@ export default function UserDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 px-10 py-8 overflow-y-auto bg-gradient-to-br from-white via-blue-50 to-blue-100">
-        {/* Heading removed as requested */}
+        {activeSection === "dashboard" && (
+          <>
+            <Section title="Your Info">
+              <DetailCard icon={<FiUser />} label="Full Name" value={userData.fullName || "N/A"} />
+              <DetailCard icon={<FiMail />} label="Email" value={userData.emailAddress || "N/A"} />
+              <DetailCard icon={<FiBriefcase />} label="Role" value={userData.role || "N/A"} />
+              <DetailCard
+                icon={<FiCode />}
+                label="Skills"
+                value={Array.isArray(userData.skills) ? userData.skills.join(", ") : userData.skills || "N/A"}
+              />
+            </Section>
 
-        {/* User Info */}
-        <Section title="Your Info">
-          <DetailCard icon={<FiUser />} label="Full Name" value={userData.fullName || "N/A"} />
-          <DetailCard icon={<FiMail />} label="Email" value={userData.emailAddress || "N/A"} />
-          <DetailCard icon={<FiBriefcase />} label="Role" value={userData.role || "N/A"} />
-          <DetailCard
-            icon={<FiCode />}
-            label="Skills"
-            value={Array.isArray(userData.skills) ? userData.skills.join(", ") : userData.skills || "N/A"}
-          />
-        </Section>
+            <Section title="Projects">
+              <DetailCard icon={<FiFolder />} label="Project 1" value="E-commerce website" />
+              <DetailCard icon={<FiFolder />} label="Project 2" value="Portfolio app" />
+              <DetailCard icon={<FiFolder />} label="Project 3" value="AI chatbot" />
+            </Section>
 
-        {/* Projects */}
-        <Section title="Projects">
-          <DetailCard icon={<FiFolder />} label="Project 1" value="E-commerce website" />
-          <DetailCard icon={<FiFolder />} label="Project 2" value="Portfolio app" />
-          <DetailCard icon={<FiFolder />} label="Project 3" value="AI chatbot" />
-        </Section>
+            <Section title="Coding Profiles">
+              <DetailCard icon={<FiGithub />} label="GitHub" value="github.com/username" />
+              <DetailCard icon={<FiCode />} label="LeetCode" value="leetcode.com/username" />
+              <DetailCard icon={<FiCode />} label="CodeChef" value="codechef.com/users/username" />
+            </Section>
 
-        {/* Coding Profiles */}
-        <Section title="Coding Profiles">
-          <DetailCard icon={<FiGithub />} label="GitHub" value="github.com/username" />
-          <DetailCard icon={<FiCode />} label="LeetCode" value="leetcode.com/username" />
-          <DetailCard icon={<FiCode />} label="CodeChef" value="codechef.com/users/username" />
-        </Section>
+            <Section title="Achievements">
+              <DetailCard icon={<FiAward />} label="Hackathon Winner" value="Won CodeFest 2024" />
+              <DetailCard icon={<FiAward />} label="Top Contributor" value="Open source projects" />
+            </Section>
+          </>
+        )}
 
-        {/* Achievements */}
-        <Section title="Achievements">
-          <DetailCard icon={<FiAward />} label="Hackathon Winner" value="Won CodeFest 2024" />
-          <DetailCard icon={<FiAward />} label="Top Contributor" value="Open source projects" />
-        </Section>
+        {activeSection === "connections" && (
+          <Section title="Your Connections">
+            <div className="grid gap-4">
+              {["Jane Doe", "John Smith", "Alice Kumar"].map((name, index) => (
+                <div key={index} className="bg-white p-5 rounded-lg shadow-md flex items-center space-x-4">
+                  <img
+                    src={`https://i.pravatar.cc/100?img=${index + 10}`}
+                    className="w-14 h-14 rounded-full"
+                    alt={name}
+                  />
+                  <div>
+                    <p className="font-bold text-gray-700">{name}</p>
+                    <p className="text-gray-500 text-sm">Full Stack Developer</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {activeSection === "notifications" && (
+          <Section title="Notifications">
+            <div className="space-y-4">
+              <div className="bg-yellow-100 text-yellow-800 p-4 rounded-lg shadow">
+                🔔 Your profile has been viewed 10 times today!
+              </div>
+              <div className="bg-green-100 text-green-800 p-4 rounded-lg shadow">
+                ✅ Project “Portfolio App” received 3 new stars on GitHub.
+              </div>
+              <div className="bg-red-100 text-red-800 p-4 rounded-lg shadow">
+                ⚠️ Connection request from "Unknown User" was declined.
+              </div>
+            </div>
+          </Section>
+        )}
+
+        {activeSection === "edit-profile" && (
+          <Section title="Edit Your Profile">
+            <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block mb-1 text-gray-700">Full Name</label>
+                <input className="w-full p-2 border border-gray-300 rounded" defaultValue={userData.fullName} />
+              </div>
+              <div>
+                <label className="block mb-1 text-gray-700">Email</label>
+                <input className="w-full p-2 border border-gray-300 rounded" defaultValue={userData.emailAddress} />
+              </div>
+              <div className="col-span-2">
+                <label className="block mb-1 text-gray-700">Skills</label>
+                <input className="w-full p-2 border border-gray-300 rounded" defaultValue={userData.skills?.join(", ")} />
+              </div>
+              <button
+                type="submit"
+                className="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+              >
+                Save Changes
+              </button>
+            </form>
+          </Section>
+        )}
+
+        {activeSection === "settings" && (
+          <Section title="Settings">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between bg-white p-4 rounded shadow">
+                <span className="text-gray-700">Dark Mode</span>
+                <input type="checkbox" className="w-5 h-5" />
+              </div>
+              <div className="flex items-center justify-between bg-white p-4 rounded shadow">
+                <span className="text-gray-700">Email Notifications</span>
+                <input type="checkbox" className="w-5 h-5" defaultChecked />
+              </div>
+              <div className="flex items-center justify-between bg-white p-4 rounded shadow">
+                <span className="text-gray-700">Auto Save</span>
+                <input type="checkbox" className="w-5 h-5" />
+              </div>
+            </div>
+          </Section>
+        )}
       </div>
     </div>
   );
@@ -169,4 +240,3 @@ function Section({ title, children }) {
     </div>
   );
 }
-
