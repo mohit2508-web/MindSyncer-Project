@@ -14,21 +14,16 @@ export default function Pricing() {
 
   const plans = {
     basic: {
-      name: "Basic Plan",
-      monthlyPrice: 29,
-      annualPrice: 24,
+      name: "Free Plan",
+      monthlyPrice: 0,
+      annualPrice: 0,
       description: "Perfect for small businesses just starting out",
       features: [
         "Employee Onboarding",
-        "Time and Attendance Tracking",
         "Basic Payroll Processing",
-        "Employee Self-Service Portal",
-        "Standard Reporting",
         "Email Support",
-        "50 Employee Profiles",
-        "Mobile App Access"
+        "50 Employee Profiles"
       ],
-      buttonText: "Book a Demo",
       popular: false
     },
     professional: {
@@ -37,34 +32,24 @@ export default function Pricing() {
       annualPrice: 65,
       description: "Ideal for growing businesses needing more advanced features",
       features: [
-        "All Basic Plan Features Plus",
-        "Performance Management",
-        "Advanced Payroll Processing with Tax Filing",
-        "Customizable Reports and Analytics",
-        "PTO and Leave Management",
-        "Integration with Third-Party Apps",
-        "Priority Email Support",
-        "Role-Based Access Control"
+        "All Basic Features",
+        "Advanced Payroll Processing",
+        "Custom Reports & Analytics",
+        "Third-Party Integrations"
       ],
-      buttonText: "Get Started",
       popular: true
     },
     enterprise: {
       name: "Enterprise Plan",
       monthlyPrice: 199,
       annualPrice: 165,
-      description: "Designed for large organizations requiring comprehensive HR solutions",
+      description: "Designed for large organizations needing comprehensive HR solutions",
       features: [
-        "All Professional Plan Features Plus",
-        "Unlimited Employee Profiles",
-        "Dedicated Account Manager",
-        "Onboarding and Training Support",
-        "Custom Workflows and Approvals",
-        "API Access for Custom Integrations",
-        "Multi-Language and Multi-Currency Support",
-        "Advanced Compliance Management"
+        "All Professional Features",
+        "Unlimited Employees",
+        "Custom Workflows",
+        "Dedicated Account Manager"
       ],
-      buttonText: "Contact Sales",
       popular: false
     }
   };
@@ -122,20 +107,18 @@ export default function Pricing() {
           </div>
         </div>
 
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {Object.entries(plans).map(([key, plan]) => (
-             <div
-                key={key}
-                className={`rounded-3xl shadow-xl p-8 cursor-pointer transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden ${
-                  isSelected(key)
-                    ? "bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-2xl"
-                    : plan.popular
-                    ? "bg-white border-2 border-indigo-200 shadow-lg"
-                    : "bg-white border border-gray-200 hover:border-indigo-300"
-                }`}
-                onClick={() => handleSelect(key)}
-              
+            <div
+              key={key}
+              className={`rounded-3xl shadow-xl p-8 cursor-pointer transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden ${
+                isSelected(key)
+                  ? "bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-2xl"
+                  : plan.popular
+                  ? "bg-white border-2 border-indigo-200 shadow-lg"
+                  : "bg-white border border-gray-200 hover:border-indigo-300"
+              }`}
+              onClick={() => handleSelect(key)}
             >
               {plan.popular && (
                 <div className="absolute top-0 right-0 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-bl-lg text-sm font-semibold">
@@ -166,17 +149,29 @@ export default function Pricing() {
                   </p>
                 </div>
 
-              <div className="mt-6">
+                {/* Upcoming Button */}
+                <div className="mt-6 w-full">
                 <button
-                className={`w-full px-6 py-3 rounded-full font-semibold text-lg shadow-md transition-all duration-300 bg-gradient-to-r from-indigo-500 to-purple-500 text-white hover:from-indigo-600 hover:to-purple-600`}
-              >
-                {plan.buttonText}
-              </button>
+                  disabled
+                  className="w-full rounded-full mb-3 font-semibold text-lg shadow-md transition-all duration-300 bg-gray-400 text-white cursor-not-allowed"
+                >
+                  Upcoming Plans
+                </button>
+
+                <span
+                  className="block text-white font-semibold mt-2 text-center"
+                  style={{
+                    // textShadow: '0 0 4px #22c55e, 0 0 8px #22c55e, 0 0 12px #22c55e',
+                    color: '#22c55e'
+                  }}
+                >
+                  ✨ Comming soon
+                </span>
               </div>
 
               </div>
 
-              <div className="mt-8 pt-6 border-t border-opacity-20 ${isSelected(key) ? 'border-white' : 'border-gray-200'}">
+              <div className={`mt-8 pt-6 border-t border-opacity-20 ${isSelected(key) ? "border-white" : "border-gray-200"}`}>
                 <p className={`text-sm font-semibold mb-4 ${isSelected(key) ? "text-indigo-100" : "text-gray-500"}`}>
                   What you will get
                 </p>
@@ -186,7 +181,7 @@ export default function Pricing() {
                       <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                         isSelected(key) ? "bg-white" : "bg-indigo-100"
                       }`}>
-                        <svg className={`w-3 h-3 ${isSelected(key) ? "text-indigo-600" : "text-indigo-600"}`} fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-3 h-3 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
                       </div>
@@ -208,7 +203,7 @@ export default function Pricing() {
           <button 
             onClick={() => setPopupOpen(true)}
             className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
-            Contact US
+            Contact Us
           </button>
           <ContactUsPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
         </div>
