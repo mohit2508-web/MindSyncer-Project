@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react'; // For hamburger and close icons
+import ContactUsPopup from "../pages/ContactUsPopup";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
   return (
     <header className="bg-white shadow-sm rounded-b-3xl">
@@ -41,13 +43,20 @@ export default function Header() {
           <NavLink
             to="/SignUp"
             className={({ isActive }) =>
-              `bg-[#0F172A] px-5 py-2 rounded-xl font-medium ${
-                isActive ? 'text-green-500' : 'text-white'
+              `bg-[#0F172A] px-5 text-white py-2 rounded-xl font-medium ${
+                isActive ? 'underline' : ''
               }`
             }
           >
             Register/Login
           </NavLink>
+          <button 
+            onClick={() => setPopupOpen(true)}
+            className="bg-white text-black rounded-xl font-medium"
+          >
+            Contact US
+          </button>
+          <ContactUsPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
         </div>
 
         {/* Mobile Menu Toggle */}
@@ -105,6 +114,12 @@ export default function Header() {
             >
               Register/SignIn
             </NavLink>
+            <button 
+              onClick={() => setPopupOpen(true)}
+              className="bg-[#0F172A] px-4 py-2 rounded-xl font-medium text-white">
+              Contact US
+            </button>
+            <ContactUsPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
           </div>
         </div>
       )}

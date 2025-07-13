@@ -1,8 +1,10 @@
 import { useState } from "react";
+import ContactUsPopup from "./ContactUsPopup";
 
 export default function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState("professional");
   const [billingCycle, setBillingCycle] = useState("monthly");
+  const [isPopupOpen, setPopupOpen] = useState(false);
 
   const handleSelect = (plan) => {
     setSelectedPlan(plan);
@@ -203,9 +205,12 @@ export default function Pricing() {
           <p className="text-gray-600 text-lg mb-4">
             Need a custom solution? We've got you covered.
           </p>
-          <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
-            Contact Our Sales Team
+          <button 
+            onClick={() => setPopupOpen(true)}
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 shadow-lg">
+            Contact US
           </button>
+          <ContactUsPopup isOpen={isPopupOpen} onClose={() => setPopupOpen(false)} />
         </div>
       </div>
     </div>
