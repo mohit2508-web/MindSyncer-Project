@@ -40,7 +40,7 @@ export default function UserDashboard() {
       const user = JSON.parse(userStr);
       const userId = user.id;
 
-      axios.get(`${apiUrl}/${userId}`).then((res) => {
+      axios.get(`${apiUrl}/users/${userId}`).then((res) => {
         setUserData(res.data);
         setEditForm({
           fullName: res.data.fullName,

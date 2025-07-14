@@ -3,8 +3,11 @@ import axios from 'axios';
 
 export default function Explore() {
   const [profiles, setProfiles] = useState([]);
+  const [connections, setConnections] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios.get(`${apiUrl}/users`)
@@ -14,7 +17,39 @@ export default function Explore() {
       .catch(err => {
         console.error("Failed to fetch profiles:", err);
       });
+
+      // Fetch user's connections
+    if (currentUser?._id) {
+      axios.get(`${apiUrl}/connections/${currentUser._id}`)
+        .then(res => {
+          setConnections(res.data.connections.map(conn => conn._id)); // Store only IDs
+        })
+        .catch(err => {
+          console.error("Failed to fetch connections:", err);
+        });
+    }
   }, []);
+    const handleConnect = async (connectUserId) => {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      console.log("Sending POST request to /connections with:", {
+        userId: user?.id, // ✅ FIXED here
+        connectUserId,
+      });
+
+      try {
+        const res = await axios.post(`${apiUrl}/connections`, {
+          userId: user.id, // ✅ FIXED here
+          connectUserId,
+        });
+
+        console.log("✅ Connection successful:", res.data);
+        setConnections(prev => [...prev, connectUserId]);
+      } catch (error) {
+        console.error("❌ Connection failed:", error.response?.data || error);
+      }
+    };
+
 
   // Filtered profiles based on search
   const filteredProfiles = profiles.filter(profile => {
@@ -106,9 +141,21 @@ export default function Explore() {
                   </div>
                 </div>
                 <div className="mt-4 md:mt-0">
-                  <button className="px-5 py-2 bg-[#0F172A] text-white rounded-full hover:bg-[#1E293B] transition">
-                    Connect
-                  </button>
+                  {connections.includes(profile._id) ? (
+                    <button
+                      className="px-5 py-2 bg-gray-400 text-white rounded-full cursor-not-allowed"
+                      disabled
+                    >
+                      Connected
+                    </button>
+                  ) : (
+                    <button
+                      className="px-5 py-2 bg-[#0F172A] text-white rounded-full hover:bg-[#1E293B] transition"
+                      onClick={() => handleConnect(profile._id)}
+                    >
+                      Connect
+                    </button>
+                  )}
                 </div>
               </div>
             ))

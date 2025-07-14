@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/logout', logoutUser);
-router.get('/users', getAllUsers); 
+router.get('/', getAllUsers); 
 // Yeh new route:
 router.get('/:id', getUserById);
 router.put('/:id', updateUserById);

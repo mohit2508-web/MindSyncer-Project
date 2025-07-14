@@ -36,7 +36,7 @@ export default function AuthPage() {
     try {
         if (isLogin) {
         // Login request
-          const res = await axios.post(`${apiUrl}/login`, {
+          const res = await axios.post(`${apiUrl}/users/login`, {
           emailAddress: formData.email,
           password: formData.password,
         });

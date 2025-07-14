@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import connectionRoutes from './routes/connection.route.js';
 
 const app = express()
 
@@ -20,7 +21,7 @@ import userRouter from './routes/user.route.js'
 
 // routes declaration
 app.use("/api/v1/users",userRouter)
-
+app.use('/api/v1/connections', connectionRoutes);
 
 
 // http://localhost:8000/users/login
