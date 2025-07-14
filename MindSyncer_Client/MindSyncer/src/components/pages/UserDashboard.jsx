@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 
 export default function UserDashboard() {
   const [userData, setUserData] = useState(null);
+  const [userConnections, setUserConnections] = useState([]);
   const [activeSection, setActiveSection] = useState("dashboard");
   const [profileDropdown, setProfileDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,6 +52,16 @@ export default function UserDashboard() {
             : "",
         });
       });
+
+      // Fetch connections
+      axios.get(`${apiUrl}/connections/${user.id}`)
+      .then(res => {
+        setUserConnections(res.data.connections); // full user objects
+      })
+      .catch(err => {
+        console.error("Failed to fetch connections:", err);
+      });
+
     } catch (error) {
       console.error("Failed to load user:", error);
       localStorage.removeItem("user");
@@ -311,6 +322,23 @@ export default function UserDashboard() {
                 Save Changes
               </button>
             </form>
+          </Section>
+        )}
+
+        {activeSection === "connections" && (
+          <Section title="Your Connections">
+            {userConnections.length === 0 ? (
+              <p className="text-gray-500 col-span-full">You have no connections yet.</p>
+            ) : (
+              userConnections.map((conn) => (
+                <DetailCard
+                  key={conn._id}
+                  icon={<FiUser />}
+                  label={conn.fullName}
+                  value={conn.emailAddress}
+                />
+              ))
+            )}
           </Section>
         )}
       </div>
