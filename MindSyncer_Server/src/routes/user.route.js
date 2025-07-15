@@ -8,7 +8,7 @@ router.post('/login', loginUser);
 router.post('/logout', logoutUser);
 router.get('/', getAllUsers); 
 // Yeh new route:
-router.get('/:id', getUserById);
 router.put('/:id', updateUserById);
+router.get('/:id', getUserById);
 
 export default router;

@@ -85,7 +85,7 @@ export default function UserDashboard() {
     };
 
     try {
-      const res = await axios.put(`${apiUrl}/${userData._id}`, updatedData);
+      const res = await axios.put(`${apiUrl}/users/${userData._id}`, updatedData);
       alert("Profile updated successfully!");
       localStorage.setItem("user", JSON.stringify(res.data.user));
       setUserData(res.data.user);

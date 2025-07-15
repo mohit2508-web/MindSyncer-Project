@@ -50,7 +50,7 @@ export default function AuthPage() {
   
       } else {
         // Register request
-        await axios.post(`${apiUrl}/register`, {
+        await axios.post(`${apiUrl}/users/register`, {
           fullName: formData.name,
           emailAddress: formData.email,
           password: formData.password,

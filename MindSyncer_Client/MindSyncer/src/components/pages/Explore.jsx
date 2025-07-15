@@ -19,7 +19,7 @@ export default function Explore() {
       });
 
       // Fetch user's connections
-    if (currentUser?._id) {
+    if (currentUser?._id ) {
       axios.get(`${apiUrl}/connections/${currentUser._id}`)
         .then(res => {
           setConnections(res.data.connections.map(conn => conn._id)); // Store only IDs
@@ -33,13 +33,13 @@ export default function Explore() {
       const user = JSON.parse(localStorage.getItem("user"));
 
       console.log("Sending POST request to /connections with:", {
-        userId: user?.id, // ✅ FIXED here
+        userId: user?._id, // ✅ FIXED here
         connectUserId,
       });
 
       try {
         const res = await axios.post(`${apiUrl}/connections`, {
-          userId: user.id, // ✅ FIXED here
+          userId: user._id, // ✅ FIXED here
           connectUserId,
         });
 
