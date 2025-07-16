@@ -12,6 +12,15 @@ export default function EditProfile() {
     emailAddress: "",
     role: "",
     skills: "",
+    profileImage: "",
+    journey: "",
+    education: "",
+    achievements: "",
+    github: "",
+    linkedin: "",
+    twitter: "",
+    instagram: "",
+    website: "",
   });
 
   useEffect(() => {
@@ -19,7 +28,7 @@ export default function EditProfile() {
     const user = userStr ? JSON.parse(userStr) : null;
 
     if (!user || !user.id) {
-      alert("Invalid session. Please login again!.");
+      alert("Invalid session. Please login again.");
       navigate("/login");
       return;
     }
@@ -29,11 +38,21 @@ export default function EditProfile() {
     axios
       .get(`${apiUrl}/${user.id}`)
       .then((res) => {
+        const data = res.data;
         setFormData({
-          fullName: res.data.fullName || "",
-          emailAddress: res.data.emailAddress || "",
-          role: res.data.role || "",
-          skills: Array.isArray(res.data.skills) ? res.data.skills.join(", ") : "",
+          fullName: data.fullName || "",
+          emailAddress: data.emailAddress || "",
+          role: data.role || "",
+          skills: Array.isArray(data.skills) ? data.skills.join(", ") : "",
+          profileImage: data.profileImage || "",
+          journey: data.journey || "",
+          education: Array.isArray(data.education) ? data.education.join(", ") : "",
+          achievements: Array.isArray(data.achievements) ? data.achievements.join(", ") : "",
+          github: data.socials?.github || "",
+          linkedin: data.socials?.linkedin || "",
+          twitter: data.socials?.twitter || "",
+          instagram: data.socials?.instagram || "",
+          website: data.socials?.website || "",
         });
       })
       .catch((err) => {
@@ -54,25 +73,26 @@ export default function EditProfile() {
       emailAddress: formData.emailAddress,
       role: formData.role,
       skills: formData.skills.split(",").map((s) => s.trim()).filter(Boolean),
+      profileImage: formData.profileImage,
+      journey: formData.journey,
+      education: formData.education.split(",").map((e) => e.trim()).filter(Boolean),
+      achievements: formData.achievements.split(",").map((a) => a.trim()).filter(Boolean),
+      socials: {
+        github: formData.github,
+        linkedin: formData.linkedin,
+        twitter: formData.twitter,
+        instagram: formData.instagram,
+        website: formData.website,
+      },
     };
 
     try {
       const res = await axios.put(`${apiUrl}/${userId}`, updatedData);
 
       if (res.data && res.data.user) {
-        // 🟢 Update localStorage
         localStorage.setItem("user", JSON.stringify(res.data.user));
-
-        // 🟢 Show alert
         alert(res.data.message || "Profile updated successfully!");
-
-        // 🟢 Update formData
-        setFormData({
-          fullName: res.data.user.fullName,
-          emailAddress: res.data.user.emailAddress,
-          role: res.data.user.role,
-          skills: Array.isArray(res.data.user.skills) ? res.data.user.skills.join(", ") : "",
-        });
+        navigate(`/profile/${userId}`);
       } else {
         alert("Unexpected response from server.");
       }
@@ -86,40 +106,32 @@ export default function EditProfile() {
     <div className="p-10 max-w-xl mx-auto">
       <h2 className="text-2xl font-bold mb-6">Edit Your Profile</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-          placeholder="Full Name"
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="email"
-          name="emailAddress"
-          value={formData.emailAddress}
-          onChange={handleChange}
-          placeholder="Email Address"
-          className="w-full p-2 border rounded"
-          required
-        />
-        <input
-          type="text"
-          name="role"
-          value={formData.role}
-          onChange={handleChange}
-          placeholder="Role"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="skills"
-          value={formData.skills}
-          onChange={handleChange}
-          placeholder="Skills (comma separated)"
-          className="w-full p-2 border rounded"
-        />
+        {[
+          { label: "Full Name", name: "fullName" },
+          { label: "Email Address", name: "emailAddress", type: "email" },
+          { label: "Role", name: "role" },
+          { label: "Skills (comma separated)", name: "skills" },
+          { label: "Profile Image URL", name: "profileImage" },
+          { label: "Journey", name: "journey" },
+          { label: "Education (comma separated)", name: "education" },
+          { label: "Achievements (comma separated)", name: "achievements" },
+          { label: "GitHub URL", name: "github" },
+          { label: "LinkedIn URL", name: "linkedin" },
+          { label: "Twitter URL", name: "twitter" },
+          { label: "Instagram URL", name: "instagram" },
+          { label: "Website URL", name: "website" },
+        ].map(({ label, name, type = "text" }) => (
+          <input
+            key={name}
+            type={type}
+            name={name}
+            value={formData[name]}
+            onChange={handleChange}
+            placeholder={label}
+            className="w-full p-2 border rounded"
+          />
+        ))}
+
         <button
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"

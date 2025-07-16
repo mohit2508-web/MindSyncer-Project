@@ -25,7 +25,17 @@ export default function UserDashboard() {
     emailAddress: "",
     role: "",
     skills: "",
+    profileImage: "",
+    journey: "",
+    education: "",
+    achievements: "",
+    github: "",
+    linkedin: "",
+    twitter: "",
+    instagram: "",
+    website: "",
   });
+
 
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -70,30 +80,47 @@ export default function UserDashboard() {
   }, [apiUrl, navigate]);
 
   const handleEditChange = (e) => {
-    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setEditForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
-  const handleEditSubmit = async (e) => {
-    e.preventDefault();
-    const updatedData = {
-      fullName: editForm.fullName,
-      emailAddress: editForm.emailAddress,
-      role: editForm.role,
-      skills: editForm.skills
-        ? editForm.skills.split(",").map((s) => s.trim())
-        : [],
-    };
 
-    try {
-      const res = await axios.put(`${apiUrl}/users/${userData._id}`, updatedData);
-      alert("Profile updated successfully!");
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      setUserData(res.data.user);
-      setActiveSection("dashboard");
-    } catch (error) {
-      alert("Error updating profile");
-    }
+const handleEditSubmit = async (e) => {
+  e.preventDefault();
+
+  const updatedData = {
+    fullName: editForm.fullName,
+    emailAddress: editForm.emailAddress,
+    role: editForm.role,
+    profileImage: editForm.profileImage,
+    journey: editForm.journey,
+    education: editForm.education,
+    achievements: editForm.achievements,
+    skills: editForm.skills
+      ? editForm.skills.split(",").map((s) => s.trim())
+      : [],
+    github: editForm.github,
+    linkedin: editForm.linkedin,
+    twitter: editForm.twitter,
+    instagram: editForm.instagram,
+    website: editForm.website,
   };
+
+  try {
+    const res = await axios.put(`${apiUrl}/users/${userData._id}`, updatedData);
+    alert("Profile updated successfully!");
+    localStorage.setItem("user", JSON.stringify(res.data.user));
+    setUserData(res.data.user);
+    setActiveSection("dashboard");
+  } catch (error) {
+    console.error("Update failed:", error);
+    alert("Error updating profile");
+  }
+};
+
 
   if (!userData) {
     return (
@@ -276,54 +303,147 @@ export default function UserDashboard() {
         )}
 
         {activeSection === "edit-profile" && (
-          <Section title="Edit Your Profile">
-            <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleEditSubmit}>
-              <div>
-                <label className="block mb-1 text-gray-700">Full Name</label>
-                <input
-                  name="fullName"
-                  className="w-full p-2 border border-gray-300 rounded"
-                  value={editForm.fullName}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div>
-                <label className="block mb-1 text-gray-700">Email</label>
-                <input
-                  name="emailAddress"
-                  className="w-full p-2 border border-gray-300 rounded"
-                  value={editForm.emailAddress}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div>
-                <label className="block mb-1 text-gray-700">Role</label>
-                <input
-                  name="role"
-                  className="w-full p-2 border border-gray-300 rounded"
-                  value={editForm.role}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div className="col-span-2">
-                <label className="block mb-1 text-gray-700">Skills</label>
-                <input
-                  name="skills"
-                  className="w-full p-2 border border-gray-300 rounded"
-                  value={editForm.skills}
-                  onChange={handleEditChange}
-                  placeholder="Comma separated e.g. JavaScript, React"
-                />
-              </div>
-              <button
-                type="submit"
-                className="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-              >
-                Save Changes
-              </button>
-            </form>
-          </Section>
-        )}
+  <Section title="Edit Your Profile">
+    <form className="grid grid-cols-1 sm:grid-cols-2 gap-6" onSubmit={handleEditSubmit}>
+      {/* Basic Info */}
+      <div>
+        <label className="block mb-1 text-gray-700">Full Name</label>
+        <input
+          name="fullName"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.fullName}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div>
+        <label className="block mb-1 text-gray-700">Email</label>
+        <input
+          name="emailAddress"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.emailAddress}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div>
+        <label className="block mb-1 text-gray-700">Role</label>
+        <input
+          name="role"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.role}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div>
+        <label className="block mb-1 text-gray-700">Profile Image URL</label>
+        <input
+          name="profileImage"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.profileImage}
+          onChange={handleEditChange}
+        />
+      </div>
+
+      {/* Text Area Fields */}
+      <div className="col-span-2">
+        <label className="block mb-1 text-gray-700">Journey</label>
+        <textarea
+          name="journey"
+          rows={3}
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.journey}
+          onChange={handleEditChange}
+        />
+      </div>
+
+      {/* Skills, Education, Achievements */}
+      <div className="col-span-2">
+        <label className="block mb-1 text-gray-700">Skills</label>
+        <input
+          name="skills"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.skills}
+          onChange={handleEditChange}
+          placeholder="e.g. React, Node.js, MongoDB"
+        />
+      </div>
+      <div className="col-span-2">
+        <label className="block mb-1 text-gray-700">Education</label>
+        <input
+          name="education"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.education}
+          onChange={handleEditChange}
+          placeholder="e.g. B.Tech CSE, XYZ University"
+        />
+      </div>
+      <div className="col-span-2">
+        <label className="block mb-1 text-gray-700">Achievements</label>
+        <input
+          name="achievements"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.achievements}
+          onChange={handleEditChange}
+          placeholder="e.g. Hackathon Winner, Google Scholarship"
+        />
+      </div>
+
+      {/* Social Links */}
+      <div>
+        <label className="block mb-1 text-gray-700">GitHub</label>
+        <input
+          name="github"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.github}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div>
+        <label className="block mb-1 text-gray-700">LinkedIn</label>
+        <input
+          name="linkedin"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.linkedin}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div>
+        <label className="block mb-1 text-gray-700">Twitter</label>
+        <input
+          name="twitter"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.twitter}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div>
+        <label className="block mb-1 text-gray-700">Instagram</label>
+        <input
+          name="instagram"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.instagram}
+          onChange={handleEditChange}
+        />
+      </div>
+      <div className="col-span-2">
+        <label className="block mb-1 text-gray-700">Website</label>
+        <input
+          name="website"
+          className="w-full p-2 border border-gray-300 rounded"
+          value={editForm.website}
+          onChange={handleEditChange}
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+      >
+        Save Changes
+      </button>
+    </form>
+  </Section>
+)}
+
 
         {activeSection === "connections" && (
           <Section title="Your Connections">
