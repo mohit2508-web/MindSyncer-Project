@@ -118,8 +118,6 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
-
-  connections: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
