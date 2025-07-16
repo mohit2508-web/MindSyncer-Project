@@ -19,7 +19,7 @@ export default function EditProfile() {
     const user = userStr ? JSON.parse(userStr) : null;
 
     if (!user || !user.id) {
-      alert("Invalid session. Please login again.");
+      alert("Invalid session. Please login again!.");
       navigate("/login");
       return;
     }
