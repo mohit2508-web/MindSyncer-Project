@@ -2,35 +2,73 @@ import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'your_jwt_secret_key'; // Replace with env var in production
+const JWT_SECRET = 'your_jwt_secret_key'; // ⚠ Change in production to process.env.JWT_SECRET
 
+/**
+ * Register a new user
+ */
 export const registerUser = async (req, res) => {
-  try {
-    const { fullName, emailAddress, password, role, skills } = req.body;
+  console.log("👋 Register route hit!");
+  console.log("REQ.BODY =>", req.body);
 
+  try {
+    const {
+      fullName,
+      emailAddress,
+      password,
+      role,
+      skills,
+      profileImage = "",
+      journey = "",
+      education,
+      achievements,
+      socials = {},
+      // ⬇ Add any new fields you want here
+      // newField
+    } = req.body;
+
+    // Check if user already exists
     const existingUser = await User.findOne({ emailAddress });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists with this email' });
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Create user
     const newUser = new User({
       fullName,
       emailAddress,
       password: hashedPassword,
       role,
-      skills: skills ? skills.split(',').map(skill => skill.trim()) : [],
+      skills: skills || [],
+      profileImage,
+      journey,
+      education: education || [],
+      achievements: achievements || [],
+      socials: {
+        github: socials.github || "",
+        linkedin: socials.linkedin || "",
+        twitter: socials.twitter || "",
+        instagram: socials.instagram || "",
+        website: socials.website || "",
+      },
+      // newField
     });
 
     await newUser.save();
+
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('🔥 Registration error:', error.message, error.stack);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
+/**
+ * Login user
+ */
 export const loginUser = async (req, res) => {
   try {
     const { emailAddress, password } = req.body;
@@ -60,21 +98,30 @@ export const loginUser = async (req, res) => {
         emailAddress: user.emailAddress,
         role: user.role,
         skills: user.skills,
+        profileImage: user.profileImage,
+        journey: user.journey,
+        education: user.education,
+        achievements: user.achievements,
+        socials: user.socials,
+        // newField: user.newField,
       }
     });
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('🔥 Login error:', error.message, error.stack);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
+/**
+ * Logout
+ */
 export const logoutUser = (req, res) => {
-  // Just a placeholder since JWT is stateless
-  // You clear token on client side
   res.status(200).json({ message: 'Logged out successfully' });
 };
 
-
+/**
+ * Get user by ID
+ */
 export const getUserById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -90,26 +137,35 @@ export const getUserById = async (req, res) => {
       emailAddress: user.emailAddress,
       role: user.role,
       skills: user.skills,
+      profileImage: user.profileImage,
+      journey: user.journey,
+      education: user.education,
+      achievements: user.achievements,
+      socials: user.socials,
+      // newField: user.newField,
     });
   } catch (error) {
-    console.error('Get user error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('🔥 Get user by ID error:', error.message);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
-
+/**
+ * Get all users
+ */
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, 'fullName role skills'); // Sirf yahi fields bhejne hain
+    const users = await User.find({}, 'fullName role skills profileImage');
     res.status(200).json(users);
   } catch (error) {
-    console.error('Get all users error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('🔥 Get all users error:', error.message);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
-// PUT /api/users/:id
-// PUT /api/users/:id
+/**
+ * Update user
+ */
 export const updateUserById = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -122,6 +178,18 @@ export const updateUserById = async (req, res) => {
           emailAddress: req.body.emailAddress,
           role: req.body.role,
           skills: req.body.skills,
+          profileImage: req.body.profileImage,
+          journey: req.body.journey,
+          education: req.body.education,
+          achievements: req.body.achievements,
+          socials: {
+            github: req.body.socials?.github || "",
+            linkedin: req.body.socials?.linkedin || "",
+            twitter: req.body.socials?.twitter || "",
+            instagram: req.body.socials?.instagram || "",
+            website: req.body.socials?.website || "",
+          },
+          // newField: req.body.newField,
         },
       },
       { new: true }
@@ -133,7 +201,7 @@ export const updateUserById = async (req, res) => {
 
     res.status(200).json({ user: updatedUser });
   } catch (error) {
-    console.error("Update error:", error);
-    res.status(500).json({ message: "Error updating user" });
+    console.error("🔥 Update error:", error.message, error.stack);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

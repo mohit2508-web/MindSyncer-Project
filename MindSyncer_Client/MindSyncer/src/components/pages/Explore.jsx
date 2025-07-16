@@ -13,7 +13,7 @@ export default function Explore() {
     axios.get(`${apiUrl}/users`)
       .then(res => setProfiles(res.data))
       .catch(err => console.error("Failed to fetch profiles:", err));
-  }, []);
+  }, [apiUrl]);
 
   const filteredProfiles = profiles.filter(profile => {
     const query = searchQuery.toLowerCase();

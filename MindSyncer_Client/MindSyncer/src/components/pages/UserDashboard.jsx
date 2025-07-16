@@ -257,7 +257,7 @@ export default function UserDashboard() {
             </Section>
 
             <Section title="Projects">
-              <DetailCard icon={<FiFolder />} label="Project 1" value="E-commerce website" />
+              <DetailCard icon={<FiFolder />} label="Project 1" value={userData.projects} />
               <DetailCard icon={<FiFolder />} label="Project 2" value="Portfolio app" />
               <DetailCard icon={<FiFolder />} label="Project 3" value="AI chatbot" />
             </Section>
