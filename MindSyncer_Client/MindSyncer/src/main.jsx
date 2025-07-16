@@ -28,7 +28,7 @@ const router = createBrowserRouter(
       <Route path='AboutUs' element={<AboutUs />} />
 
       {/* ✅ Profile detail route */}
-      <Route path='profile/:id' element={<ProfilePage />} />
+      <Route path="/profile/:id" element={<ProfilePage />} />
 
       <Route
         path='dashboard'

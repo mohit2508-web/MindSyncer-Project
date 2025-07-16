@@ -106,7 +106,10 @@ export default function Explore() {
                 <div className="mt-4 md:mt-0">
                   <button
                     className="px-5 py-2 bg-black text-white rounded-full hover:bg-black-700 transition"
-                    onClick={() => navigate(`/profile/${profile._id}`)}
+                    onClick={() => {
+                      navigate(`/profile/${profile._id}`)
+                      // console.log(`${profile.socials}`)
+                    }}
                   >
                     View Profile
                   </button>
