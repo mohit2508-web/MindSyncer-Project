@@ -20,3 +20,8 @@ npm install axios
 # Framer-motion
 
  npm install framer-motion
+
+
+ # react fast marquee
+
+ npm install react-fast-marquee
