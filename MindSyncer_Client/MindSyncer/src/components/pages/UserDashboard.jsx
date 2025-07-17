@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import {
   FiLogOut,
   FiMail,
@@ -35,7 +36,6 @@ export default function UserDashboard() {
     instagram: "",
     website: "",
   });
-
 
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -114,7 +114,8 @@ const handleEditSubmit = async (e) => {
     alert("Profile updated successfully!");
     localStorage.setItem("user", JSON.stringify(res.data.user));
     setUserData(res.data.user);
-    setActiveSection("dashboard");
+
+    navigate('/SignUp')
   } catch (error) {
     console.error("Update failed:", error);
     alert("Error updating profile");
@@ -186,9 +187,6 @@ const handleEditSubmit = async (e) => {
               <button onClick={() => setActiveSection("dashboard")} className="text-left w-full text-black hover:text-white">
                 Dashboard
               </button>
-              <button onClick={() => setActiveSection("connections")} className="text-left w-full text-black hover:text-white">
-                Connections
-              </button>
               <button onClick={() => navigate("/Explore")} className="text-left w-full text-black hover:text-white">
                 Explore
               </button>
@@ -227,12 +225,6 @@ const handleEditSubmit = async (e) => {
               className="text-left w-full text-gray-300 hover:text-white"
             >
               Dashboard
-            </button>
-            <button
-              onClick={() => setActiveSection("connections")}
-              className="text-left w-full text-gray-300 hover:text-white"
-            >
-              Connections
             </button>
             <button
               onClick={() => navigate("/Explore")}
@@ -434,33 +426,17 @@ const handleEditSubmit = async (e) => {
         />
       </div>
 
-      <button
+      <button 
         type="submit"
-        className="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-      >
-        Save Changes
-      </button>
+        className="col-span-2 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+        onClick={() => {
+          localStorage.removeItem("user");
+          navigate('/SignUp')
+        }}>Save changes</button>
     </form>
   </Section>
 )}
 
-
-        {activeSection === "connections" && (
-          <Section title="Your Connections">
-            {userConnections.length === 0 ? (
-              <p className="text-gray-500 col-span-full">You have no connections yet.</p>
-            ) : (
-              userConnections.map((conn) => (
-                <DetailCard
-                  key={conn._id}
-                  icon={<FiUser />}
-                  label={conn.fullName}
-                  value={conn.emailAddress}
-                />
-              ))
-            )}
-          </Section>
-        )}
       </div>
     </div>
   );

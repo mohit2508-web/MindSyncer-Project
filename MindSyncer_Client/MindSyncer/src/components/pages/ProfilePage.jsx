@@ -101,7 +101,7 @@ export default function ProfilePage() {
             <li>No achievements listed.</li>
           )}
         </ul>
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-6 flex justify-center flex-wrap gap-2">
           {user.skills?.length > 0 ? (
             user.skills.map((skill, index) => (
               <span
