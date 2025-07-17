@@ -85,7 +85,7 @@ export default function Explore() {
                 className="flex flex-col md:flex-row items-center bg-white rounded-2xl shadow-lg border border-gray-200 p-6 gap-6"
               >
                 <img
-                  src={`https://i.pravatar.cc/150?u=${profile._id}`}
+                  src={profile.profileImage || `https://i.pravatar.cc/150?u=${profile._id}`}
                   alt={profile.fullName}
                   className="w-28 h-28 rounded-full border-4 border-white shadow-md object-cover"
                 />

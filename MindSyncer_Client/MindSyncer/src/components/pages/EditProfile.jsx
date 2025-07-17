@@ -23,8 +23,9 @@ export default function EditProfile() {
     website: "",
   });
 
+  const userStr = localStorage.getItem("user");
+
   useEffect(() => {
-    const userStr = localStorage.getItem("user");
     const user = userStr ? JSON.parse(userStr) : null;
 
     if (!user || !user.id) {
@@ -59,7 +60,7 @@ export default function EditProfile() {
         console.error("Error fetching user:", err);
         alert("Error fetching user details. Please try again.");
       });
-  }, []);
+  }, [apiUrl, navigate, userStr]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -92,7 +93,7 @@ export default function EditProfile() {
       if (res.data && res.data.user) {
         localStorage.setItem("user", JSON.stringify(res.data.user));
         alert(res.data.message || "Profile updated successfully!");
-        navigate(`/profile/${userId}`);
+        navigate('/login');
       } else {
         alert("Unexpected response from server.");
       }
@@ -132,12 +133,24 @@ export default function EditProfile() {
           />
         ))}
 
-        <button
+        {/* <button
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          onClick={() => {
+            localStorage.removeItem("user");
+            // navigate('/login')
+          }}
         >
           Save Changes
-        </button>
+        </button> */}
+        {/* <button 
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          onClick={() => {
+            localStorage.removeItem("user");
+            setShowPopup(true)
+          }}>Save changes</button>
+        <LoginAgainPopup isOpen={showPopup} onClose={() => setShowPopup(false)} /> */}
       </form>
     </div>
   );
