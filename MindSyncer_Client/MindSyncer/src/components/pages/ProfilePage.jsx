@@ -9,13 +9,15 @@ import {
 export default function ProfilePage() {
   const { id } = useParams(); // 👈 Get user ID from URL
   const [user, setUser] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:5173/api/v1/users/${id}`, {
-          withCredentials: true,
-        });
+       const res = await axios.get(`${apiUrl}/users/${id}`, {
+  withCredentials: true,
+});
         console.log(`${id}`);
         // console.log(res.data);     //debug found on 16 july at 23:37 2025
         setUser(res.data);
