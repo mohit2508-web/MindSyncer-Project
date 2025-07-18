@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react'; // For hamburger and close icons
 import ContactUsPopup from "../pages/ContactUsPopup";
+import logo from '../../assets/logo.png'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const navigate = useNavigate()
 
   return (
     <header className="bg-white shadow-sm rounded-b-3xl">
       <div className="max-w-10xl mx-auto px-4 sm:px-6 lg:px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <div className="bg-[#0F172A] text-white p-2 rounded-xl text-xl font-bold">
-            {"</>"}
+          <div className="mt-5 rounded-xl text-xl font-bold">
+              <img
+                src={logo}
+                alt="MindSyncer Logo"
+                className="w-20 h-20 rounded-full mx-auto mb-4 cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105"
+                onClick={() => navigate("/")}
+              />
           </div>
           <span className="text-lg font-semibold text-gray-900">MindSyncer</span>
         </div>

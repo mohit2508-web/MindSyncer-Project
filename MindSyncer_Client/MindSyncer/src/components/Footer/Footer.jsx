@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import ContactUsPopup from '../pages/ContactUsPopup';
+import logo from '../../assets/logo.png'
 import {
   FaFacebookF,
   FaInstagram,
@@ -20,7 +21,14 @@ export default function Footer() {
         {/* Left: Logo */}
         <div className="flex-shrink-0">
           <div className="text-xl font-bold flex justify-center items-center gap-2 text-gray-900">
-            <div className="bg-[#0F172A] text-white p-2 rounded-xl">{'</>'}</div>
+            <div className="mt-5 rounded-xl text-xl font-bold">
+                <img
+                  src={logo}
+                  alt="MindSyncer Logo"
+                  className="w-20 h-20 rounded-full mx-auto mb-4 cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105"
+                  onClick={() => navigate("/")}
+                />
+            </div>
             MindSyncer
           </div>
         </div>
@@ -55,7 +63,14 @@ export default function Footer() {
             <div className="flex gap-4 text-xl justify-center text-gray-600">
               <FaFacebookF className="hover:text-[#0F172A] cursor-pointer" />
               <FaInstagram className="hover:text-[#0F172A] cursor-pointer" />
-              <FaTwitter className="hover:text-[#0F172A] cursor-pointer" />
+              <a
+                href="https://x.com/MindSyncer_m2k"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTwitter className="hover:text-[#0F172A] cursor-pointer" />
+              </a>
+
               <FaLinkedinIn className="hover:text-[#0F172A] cursor-pointer" />
               <FaYoutube className="hover:text-[#0F172A] cursor-pointer" />
             </div>
