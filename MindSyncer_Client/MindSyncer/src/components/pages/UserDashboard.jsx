@@ -314,8 +314,8 @@ const handleEditSubmit = async (e) => {
 
             <Section title="Projects">
               <DetailCard icon={<FiFolder />} label="Project 1" value={userData.projects} />
-              <DetailCard icon={<FiFolder />} label="Project 2" value="Portfolio app" />
-              <DetailCard icon={<FiFolder />} label="Project 3" value="AI chatbot" />
+              <DetailCard icon={<FiFolder />} label="Project 2" value={userData.projects} />
+              <DetailCard icon={<FiFolder />} label="Project 3" value={userData.projects}/>
             </Section>
 
               <Section title="Coding Profiles">
@@ -490,6 +490,13 @@ const handleEditSubmit = async (e) => {
     </form>
   </Section>
 )}
+        {activeSection === "notifications" && (
+          <div className="text-gray-400 justify-center text-4xl mt-20 font-bold">Oops! Currently Unavailable</div>
+        )}
+
+        {activeSection === "settings" && (
+          <div className="text-gray-400 justify-center text-4xl mt-20 font-bold">Oops! Currently Unavailable</div>
+        )}
 
       </div>
     </div>
