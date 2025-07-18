@@ -16,8 +16,8 @@ export default function ProfilePage() {
     const fetchUser = async () => {
       try {
        const res = await axios.get(`${apiUrl}/users/${id}`, {
-  withCredentials: true,
-});
+        withCredentials: true,
+       });
         console.log(`${id}`);
         // console.log(res.data);     //debug found on 16 july at 23:37 2025
         setUser(res.data);
