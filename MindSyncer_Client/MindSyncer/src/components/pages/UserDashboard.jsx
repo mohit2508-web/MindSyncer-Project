@@ -175,7 +175,7 @@ const handleEditSubmit = async (e) => {
         {/* Profile Avatar */}
         <div className="relative">
           <img
-            src="https://i.pravatar.cc/150?img=32"
+            src={userData.profileImage}
             alt="Avatar"
             className="w-10 h-10 rounded-full cursor-pointer"
             onClick={() => {
@@ -246,7 +246,7 @@ const handleEditSubmit = async (e) => {
         <div>
           <div className="flex items-center mb-8">
             <img
-              src="https://i.pravatar.cc/150?img=32"
+              src={userData.profileImage}
               alt="User Avatar"
               className="w-14 h-14 rounded-full mr-4"
             />

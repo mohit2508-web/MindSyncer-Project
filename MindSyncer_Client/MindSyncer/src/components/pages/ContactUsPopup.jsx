@@ -28,7 +28,7 @@ const ContactUsPopup = ({ isOpen, onClose }) => {
 
         <form
           className="space-y-4"
-          action="https://formspree.io/f/mrblbaog" // ← replace with your actual FormsFree endpoint
+          action="https://formspree.io/f/xdkdkwdq" // ← replace with your actual FormsFree endpoint
           method="POST"
         >
           <input

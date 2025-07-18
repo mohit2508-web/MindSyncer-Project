@@ -64,14 +64,19 @@ export default function Footer() {
               <FaFacebookF className="hover:text-[#0F172A] cursor-pointer" />
               <FaInstagram className="hover:text-[#0F172A] cursor-pointer" />
               <a
+                href="https://www.linkedin.com/in/mindsyncer-m2k-02b957375/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedinIn className="hover:text-[#0F172A] cursor-pointer" />
+              </a>
+              <a
                 href="https://x.com/MindSyncer_m2k"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <FaTwitter className="hover:text-[#0F172A] cursor-pointer" />
               </a>
-
-              <FaLinkedinIn className="hover:text-[#0F172A] cursor-pointer" />
               <FaYoutube className="hover:text-[#0F172A] cursor-pointer" />
             </div>
           </div>
