@@ -12,6 +12,10 @@ import {
   FiFolder,
   FiAward,
   FiGithub,
+  FiInstagram,
+  FiChrome,
+  FiLinkedin,
+  FiTwitter
 } from "react-icons/fi";
 import { motion } from "framer-motion";
 
@@ -30,11 +34,13 @@ export default function UserDashboard() {
     journey: "",
     education: "",
     achievements: "",
-    github: "",
-    linkedin: "",
-    twitter: "",
-    instagram: "",
-    website: "",
+    socials: {
+      github: "",
+      linkedin: "",
+      twitter: "",
+      instagram: "",
+      website: "",
+    },
   });
 
   const navigate = useNavigate();
@@ -57,10 +63,20 @@ export default function UserDashboard() {
           fullName: res.data.fullName,
           emailAddress: res.data.emailAddress,
           role: res.data.role,
-          skills: Array.isArray(res.data.skills)
-            ? res.data.skills.join(", ")
-            : "",
+          skills: Array.isArray(res.data.skills) ? res.data.skills.join(", ") : "",
+          profileImage: res.data.profileImage || "",
+          journey: res.data.journey || "",
+          education: Array.isArray(res.data.education) ? res.data.education.join(", ") : "",
+          achievements: Array.isArray(res.data.achievements) ? res.data.achievements.join(", ") : "",
+          socials: {
+            github: res.data.socials?.github || "",
+            linkedin: res.data.socials?.linkedin || "",
+            twitter: res.data.socials?.twitter || "",
+            instagram: res.data.socials?.instagram || "",
+            website: res.data.socials?.website || "",
+          },
         });
+
       });
 
       // Fetch connections
@@ -81,10 +97,24 @@ export default function UserDashboard() {
 
   const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
+
+    // For socials.* inputs
+    if (
+      ["github", "linkedin", "twitter", "instagram", "website"].includes(name)
+    ) {
+      setEditForm((prevForm) => ({
+        ...prevForm,
+        socials: {
+          ...prevForm.socials,
+          [name]: value,
+        },
+      }));
+    } else {
+      setEditForm((prevForm) => ({
+        ...prevForm,
+        [name]: value,
+      }));
+    }
   };
 
 
@@ -97,17 +127,24 @@ const handleEditSubmit = async (e) => {
     role: editForm.role,
     profileImage: editForm.profileImage,
     journey: editForm.journey,
-    education: editForm.education,
-    achievements: editForm.achievements,
+    education: editForm.education
+      ? editForm.education.split(",").map((e) => e.trim())
+      : [],
+    achievements: editForm.achievements
+      ? editForm.achievements.split(",").map((a) => a.trim())
+      : [],
     skills: editForm.skills
       ? editForm.skills.split(",").map((s) => s.trim())
       : [],
-    github: editForm.github,
-    linkedin: editForm.linkedin,
-    twitter: editForm.twitter,
-    instagram: editForm.instagram,
-    website: editForm.website,
+    socials: {
+      github: editForm.socials.github,
+      linkedin: editForm.socials.linkedin,
+      twitter: editForm.socials.twitter,
+      instagram: editForm.socials.instagram,
+      website: editForm.socials.website,
+    },
   };
+
 
   try {
     const res = await axios.put(`${apiUrl}/users/${userData._id}`, updatedData);
@@ -277,19 +314,36 @@ const handleEditSubmit = async (e) => {
 
             <Section title="Projects">
               <DetailCard icon={<FiFolder />} label="Project 1" value={userData.projects} />
-              <DetailCard icon={<FiFolder />} label="Project 2" value="Portfolio app" />
-              <DetailCard icon={<FiFolder />} label="Project 3" value="AI chatbot" />
+              <DetailCard icon={<FiFolder />} label="Project 2" value={userData.projects} />
+              <DetailCard icon={<FiFolder />} label="Project 3" value={userData.projects}/>
             </Section>
 
-            <Section title="Coding Profiles">
-              <DetailCard icon={<FiGithub />} label="GitHub" value="github.com/username" />
-              <DetailCard icon={<FiCode />} label="LeetCode" value="leetcode.com/username" />
-              <DetailCard icon={<FiCode />} label="CodeChef" value="codechef.com/users/username" />
+              <Section title="Coding Profiles">
+              <a href={userData.socials.github} target="_blank" rel="noopener noreferrer">
+                <DetailCard icon={<FiGithub />} label="GitHub" value={userData.socials.github} />
+              </a>
+              <a href={userData.socials.linkedin} target="_blank" rel="noopener noreferrer">
+                <DetailCard icon={<FiLinkedin />} label="LinkedIn" value={userData.socials.linkedin} />
+              </a>
+              <a href={userData.socials.twitter} target="_blank" rel="noopener noreferrer">
+                <DetailCard icon={<FiTwitter />} label="Twitter" value={userData.socials.twitter} />
+              </a>
+              <a href={userData.socials.instagram} target="_blank" rel="noopener noreferrer">
+                <DetailCard icon={<FiInstagram />} label="Instagram" value={userData.socials.instagram} />
+              </a>
+              <a href={userData.socials.website} target="_blank" rel="noopener noreferrer">
+                <DetailCard icon={<FiChrome />} label="Portfolio" value={userData.socials.website} />
+              </a>
             </Section>
 
             <Section title="Achievements">
-              <DetailCard icon={<FiAward />} label="Hackathon Winner" value="Won CodeFest 2024" />
-              <DetailCard icon={<FiAward />} label="Top Contributor" value="Open source projects" />
+              {Array.isArray(userData.achievements) &&
+                userData.achievements.map((achievement, idx) => (
+                  <DetailCard key={idx} icon={<FiAward />} label="Hackathon Winner" value={achievement} />
+                ))
+              }
+              {/* <DetailCard icon={<FiAward />} label="Hackathon Winner" value={userData.achievements} />
+              <DetailCard icon={<FiAward />} label="Top Contributor" value="Open source projects" /> */}
             </Section>
           </>
         )}
@@ -385,7 +439,7 @@ const handleEditSubmit = async (e) => {
         <input
           name="github"
           className="w-full p-2 border border-gray-300 rounded"
-          value={editForm.github}
+          value={editForm.socials.github}
           onChange={handleEditChange}
         />
       </div>
@@ -394,7 +448,7 @@ const handleEditSubmit = async (e) => {
         <input
           name="linkedin"
           className="w-full p-2 border border-gray-300 rounded"
-          value={editForm.linkedin}
+          value={editForm.socials.linkedin}
           onChange={handleEditChange}
         />
       </div>
@@ -403,7 +457,7 @@ const handleEditSubmit = async (e) => {
         <input
           name="twitter"
           className="w-full p-2 border border-gray-300 rounded"
-          value={editForm.twitter}
+          value={editForm.socials.twitter}
           onChange={handleEditChange}
         />
       </div>
@@ -412,7 +466,7 @@ const handleEditSubmit = async (e) => {
         <input
           name="instagram"
           className="w-full p-2 border border-gray-300 rounded"
-          value={editForm.instagram}
+          value={editForm.socials.instagram}
           onChange={handleEditChange}
         />
       </div>
@@ -421,7 +475,7 @@ const handleEditSubmit = async (e) => {
         <input
           name="website"
           className="w-full p-2 border border-gray-300 rounded"
-          value={editForm.website}
+          value={editForm.socials.website}
           onChange={handleEditChange}
         />
       </div>
@@ -436,6 +490,13 @@ const handleEditSubmit = async (e) => {
     </form>
   </Section>
 )}
+        {activeSection === "notifications" && (
+          <div className="text-gray-400 justify-center text-4xl mt-20 font-bold">Oops! Currently Unavailable</div>
+        )}
+
+        {activeSection === "settings" && (
+          <div className="text-gray-400 justify-center text-4xl mt-20 font-bold">Oops! Currently Unavailable</div>
+        )}
 
       </div>
     </div>
