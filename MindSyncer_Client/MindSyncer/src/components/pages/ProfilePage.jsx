@@ -13,7 +13,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/users/${id}`, {
+        const res = await axios.get(`http://localhost:5173/api/v1/users/${id}`, {
           withCredentials: true,
         });
         console.log(`${id}`);
