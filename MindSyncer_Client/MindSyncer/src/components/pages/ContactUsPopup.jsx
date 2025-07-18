@@ -27,40 +27,39 @@ const ContactUsPopup = ({ isOpen, onClose }) => {
         </h2>
 
         <form
-  className="space-y-4"
-  action="https://formspree.io/f/mrblbaog" // ← replace with your actual FormsFree endpoint
-  method="POST"
->
-  <input
-    type="text"
-    name="name"
-    placeholder="Your Name"
-    required
-    className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-600"
-  />
-  <input
-    type="email"
-    name="email"
-    placeholder="Your Email"
-    required
-    className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-600"
-  />
-  <textarea
-    name="message"
-    rows="4"
-    placeholder="Your Message"
-    required
-    className="w-full px-4 py-2 border rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-gray-600"
-  ></textarea>
+          className="space-y-4"
+          action="https://formspree.io/f/mrblbaog" // ← replace with your actual FormsFree endpoint
+          method="POST"
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            required
+            className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-600"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            required
+            className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-gray-600"
+          />
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Your Message"
+            required
+            className="w-full px-4 py-2 border rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-gray-600"
+          ></textarea>
 
-  <button
-    type="submit"
-    className="w-full bg-black text-white font-semibold py-2 rounded-xl hover:bg-gray-700 transition"
-  >
-    Send Message
-  </button>
-</form>
-
+          <button
+            type="submit"
+            className="w-full bg-black text-white font-semibold py-2 rounded-xl hover:bg-gray-700 transition"
+          >
+            Send Message
+          </button>
+        </form>
       </motion.div>
     </div>
   );
