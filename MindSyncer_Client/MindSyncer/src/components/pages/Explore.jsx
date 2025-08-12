@@ -77,7 +77,12 @@ export default function Explore() {
         <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Explore Developers</h2>
         <div className="space-y-8 max-w-5xl mx-auto">
           {filteredProfiles.length === 0 ? (
-            <p className="text-center text-gray-500">No developers found...</p>
+           <p className="text-center text-gray-500 flex items-center justify-center gap-2">
+           
+            🚀 <span className="font-semibold text-blue-500 ">Great minds</span> are coming your way…
+            <span className="italic text-purple-500"> Please wait!</span>
+          </p>
+
           ) : (
             filteredProfiles.map(profile => (
               <div
