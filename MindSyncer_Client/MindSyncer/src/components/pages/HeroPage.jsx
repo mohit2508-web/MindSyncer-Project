@@ -190,6 +190,7 @@ export default HeroPage;
 
 */
 import React, { useEffect, useRef, useState } from "react";
+import { NavLink, Link } from "react-router-dom";
 
 const HeroPage = () => {
   const typedRef = useRef(null);
@@ -383,14 +384,19 @@ const HeroPage = () => {
             }
           </p>
 
-          <div className="flex justify-center gap-4 flex-wrap mb-10">
-            <button className={`${showIndependenceDay ? 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800' : 'bg-black hover:bg-gray-800'} text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 transform hover:scale-105`}>
-              {showIndependenceDay ? '🇮🇳 Join Now' : 'Join Now'}
-            </button>
-            <button className={`bg-white ${showIndependenceDay ? 'text-green-700 border-green-600 hover:bg-green-50' : 'text-black border-black hover:bg-gray-100'} border px-6 py-3 rounded-full font-semibold shadow-md transition-all duration-300 transform hover:scale-105`}>
-              View Profiles
-            </button>
+              <div className="flex justify-center gap-4 flex-wrap mb-10">
+            <Link to="/SignUp">
+              <button className="bg-black text-white px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-800 transition">
+                Join Now
+              </button>
+            </Link>
+            <NavLink to="/Explore">
+              <button className="bg-white text-black border border-black px-6 py-3 rounded-full font-semibold shadow-md hover:bg-gray-100 transition">
+                View Profiles
+              </button>
+            </NavLink>
           </div>
+
 
           {/* Enhanced marquee with Independence Day colors */}
           <div className="relative overflow-hidden">
@@ -608,9 +614,11 @@ const HeroPage = () => {
               "Join a fast-growing community of developers, designers, and creators today. Your next teammate is waiting."
             }
           </p>
-          <button className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md hover:bg-gray-200 transition-all duration-300 transform hover:scale-105">
-            {showIndependenceDay ? "Join the Revolution 🚀" : "Get Started Free"}
+          <Link to="/SignUp">
+          <button className="bg-white text-black px-8 py-3 rounded-full font-semibold shadow-md hover:bg-gray-200 transition">
+            Get Started Free
           </button>
+        </Link>
         </div>
       </section>
 
