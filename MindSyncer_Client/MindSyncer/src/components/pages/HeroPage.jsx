@@ -362,7 +362,7 @@ const HeroPage = () => {
                   <div className="h-1/3 bg-white"></div>
                   <div className="h-1/3 bg-green-500"></div>
                 </div>
-                <span className="text-sm text-gray-700 font-medium">Celebrating 78 Years of Freedom</span>
+                <span className="text-sm text-gray-700 font-medium">Celebrating 79 Years of Freedom</span>
                 <span className="animate-pulse">✨</span>
               </div>
             </div>
