@@ -55,7 +55,7 @@ export default function AboutUs() {
                 className="w-28 h-28 rounded-full mx-auto mb-4 object-cover shadow-lg border-4 border-white"
               />
               <h2 className="text-xl font-semibold text-gray-900 mb-1">Mohit Jadon</h2>
-              <p className="text-sm text-gray-600 mb-3">Creator</p>
+              <p className="text-sm text-gray-600 mb-3">Founder</p>
               <p className="text-sm text-gray-700">
                 I’m a 3rd-year CS student at GLA University. Together with KK, I’ve built MindSyncer from the ground up — from backend infrastructure and API design to frontend structure and performance optimization. I love solving problems and bringing logical architecture to life with seamless functionality.
               </p>
@@ -74,9 +74,9 @@ export default function AboutUs() {
                 className="w-28 h-28 rounded-full mx-auto mb-4 object-cover shadow-lg border-4 border-white"
               />
               <h2 className="text-xl font-semibold text-gray-900 mb-1">KK</h2>
-              <p className="text-sm text-gray-600 mb-3">Co-Creator</p>
+              <p className="text-sm text-gray-600 mb-3">Co-Founder</p>
               <p className="text-sm text-gray-700">
-                I’m also a 3rd-year CS student at GLA University. Mohit and I collaborated on every piece of MindSyncer — combining functionality with modern UI/UX design. I focus on building clean, intuitive interfaces while also diving deep into backend logic and project structure. Every pixel and line of code reflects our joint effort.
+                I’m  a 3rd-year CS student at GLA University. Mohit and I collaborated on every piece of MindSyncer — combining functionality with modern UI/UX design. I focus on building clean, intuitive interfaces while also diving deep into backend logic and project structure. Every pixel and line of code reflects our joint effort.
               </p>
             </div>
           </motion.div>
